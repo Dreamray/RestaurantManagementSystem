@@ -1,0 +1,3215 @@
+<!-- V0.10 -->
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>美食餐饮云系统 V2</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/layout.css">
+	<link rel="stylesheet" href="css/jquery.mCustomScrollbar.min.css">
+	<!-- <link rel="stylesheet" href="css/bootstrap-datepicker3.min.css"> -->
+	<link rel="stylesheet" href="css/jquery.datetimepicker.min.css">
+	<link rel="stylesheet" href="css/Table/tbl_home.css">
+	<link rel="stylesheet" href="css/Table/tbl_open.css">
+	<link rel="stylesheet" href="css/Table/tbl_union.css">
+	<link rel="stylesheet" href="css/Order/odr_home.css">
+</head>
+<body>
+	<div class="wrapper" id="wrapper">
+		<!-- logo 导航按钮 退出 -->
+		<div class="nav-continer">
+			<div class="logo"><h1>店名</h1></div>
+			<div class="nav-btn">
+				<ul class="" id="nav-btn-ul">
+					<li class="kt"><a id="tbl_top_btn_kt" href="#">开台</a></li>
+					<li class="dc"><a data-toggle="modal" data-target="#dianCai-modal" href="#">点菜</a></li>
+					<li class="jz"><a data-toggle="modal" data-target="#pay_home_id" href="#">结账</a></li>
+					<li class="qd"><a href="#qd" data-toggle="tab">清单</a></li>
+					<li class="hy"><a href="#hy" data-toggle="tab">会员</a></li>
+					<li class="yd"><a href="#yd" data-toggle="tab">预订</a><i>2</i></li>
+					<li class="gq"><a href="#gq" data-toggle="tab">沽清</a></li>
+					<li class="bb"><a href="#bb" data-toggle="tab">报表</a></li>
+					<li class="sz"><a href="#sz" data-toggle="tab">设置</a></li>
+					<li class="jb"><a href="#jb" data-toggle="tab">交班</a></li>
+					<li class="sp"><a href="#">锁屏</a></li>
+					<li class="ht"><a href="#ht" data-toggle="tab">后台管理</a></li>
+				</ul>
+			</div>
+			<div class="info-logout">
+				<div class="l">
+					操作员ID：<br>
+					操作员名称：<br>
+					当前班次：
+				</div>
+				<div class="r">
+					002<br>
+					张三三<br>
+					早班
+				</div>
+				<div class="o">退出</div>
+			</div>
+		</div><!-- logo 导航按钮 退出 end -->
+		<div class="nav-btn-tabs" id="nav-btn-with-close">
+			<ul>
+				<li id="tbl_home_tab" class="styw show active"><a href="#st" data-toggle="tab">堂食业务</a></li>
+				<li class="hide"><a href="#st" data-toggle="tab">查看联台</a><i></i></li>
+				<li class="hide"><a href="#qd" data-toggle="tab">清单</a><i></i></li>
+				<li class="hide"><a href="#hy" data-toggle="tab">会员</a><i></i></li>
+				<li class="hide"><a href="#yd" data-toggle="tab">预订</a><i></i></li>
+				<li class="hide"><a href="#gq" data-toggle="tab">沽清</a><i></i></li>
+				<li class="hide"><a href="#bb" data-toggle="tab">报表</a><i></i></li>
+				<li class="hide"><a href="#sz" data-toggle="tab">设置</a><i></i></li>
+				<li class="hide"><a href="#jb" data-toggle="tab">交班</a><i></i></li>
+				<li class="hide"><a href="#ht" data-toggle="tab">后台管理</a><i></i></li>
+			</ul>
+		</div>
+		<!-- 中间的可切换的tab，分左右两部分 -->
+		<div id="main-middle-tab-c" class="tab-content main-middle-continer">
+			<!-- 食堂业务 -->
+			<div id="st" class="tab-pane one-tab-pane fade active in">
+				<div class="o-p-t-2p o-t-p-left styw-middle-left percent-l1">
+					<div id="tbl_home_retrieval" class="area-viewLT-4i">
+						<div class="area-dd-a">
+							<div class="dd">
+								<div class="dropdown my-dropdown">
+									<a data-toggle="dropdown" href="#">全部区域</a>
+									<ul class="dropdown-menu fade" role="menu" aria-labelledby="dLabel" id="arealist"></ul>
+								</div>
+							</div>
+							<div class="a">
+								<div id="tbl_home_btn_cklt" class="my-btn">
+									<a href="#lt" data-toggle="tab">查看联台</a>
+								</div>
+							</div>
+						</div>
+
+						<div id="four-kykz-icon" class="four-status">
+							<label for="cf-i-kong"><i class="f-stts-icon cf-icon-kong">空</i><b>空闲</b><ul><li class="forcheckbox"><input checked="checked" id="cf-i-kong" type="checkbox" ></li></ul></label>
+							<label for="cf-i-yu"><i class="f-stts-icon cf-icon-yu">预</i><b>预订</b><ul><li class="forcheckbox"><input checked="checked" id="cf-i-yu" type="checkbox" ></li></ul></label>
+							<label for="cf-i-kai"><i class="f-stts-icon cf-icon-kai">开</i><b>开台</b><ul><li class="forcheckbox"><input checked="checked" id="cf-i-kai" type="checkbox" ></li></ul></label>
+							<label for="cf-i-zhang"><i class="f-stts-icon cf-icon-zhang">脏</i><b>脏台</b><ul><li class="forcheckbox"><input checked="checked" id="cf-i-zhang" type="checkbox" ></li></ul></label>
+						</div>
+					</div>
+					<!-- 大厅 卡片显示的大厅状态 -->
+					<div id="tbl_home_list" class="hall-card-continer">
+						<div id="tbl_home_dining"></div>
+					</div>
+					<!-- ////大厅 卡片显示的大厅状态 -->
+					<!-- 开台窗口 -->
+					<div id="kaitai-modal" class="modal kaiTai-continer fade" aria-hidden="true">
+						<div class="taoCan-content-box">
+							<div class="title">
+								<div class="r-close-btn-modal-dismiss" data-dismiss="modal"></div>
+							</div>
+							<div class="taoCan-content">
+								<div class="kt-mingCheng">
+								<!-- <input type="hidden" id="tbl_open_hide_tableId"> -->
+									<table class="kt-table">
+										<tr>
+											<td class="kt-key">台位编号</td>
+											<td class="kt-val" id="kt_code">001</td>
+										</tr>
+										<tr>
+											<td class="kt-key kt-bottom">台位名称</td>
+											<td class="kt-val kt-bottom" id="kt_name">香格里拉</td>
+										</tr>
+										<tr>
+											<td class="kt-key kt-top">服务员</td>
+											<td id="tbl_open_fwy" class="kt-val kt-top">
+												<select class="sel">
+													<option >陈珊珊</option>
+												</select>
+											</td>
+										</tr>
+										<tr>
+											<td class="kt-key">就餐人数</td>
+											<td class="kt-val"><input id="tbl_open_people" class="inp" />&nbsp;人</td>
+										</tr>
+										<tr>
+											<td class="kt-key-beizhu kt-bottom">备注</td>
+											<td class="kt-val-beizhu kt-bottom"><textarea id="tbl_open_memo" rows="5" cols="40"></textarea></td>
+										</tr>
+									</table>
+								</div>
+							</div>
+							<div class="kaiTai-bottom-btn">
+								<div class="my-btn-table">
+									<a data-dismiss="modal" href="#">取消</a>
+								</div>
+								<div class="my-btn-table">
+									<a id="tbl_open_btn_ktbdc" data-dismiss="modal" data-toggle="modal" data-target="#dianCai-modal" href="#" >开台并点菜</a>
+								</div>
+								<div class="my-btn-table">
+									<a id="tbl_open_btn-kt" data-dismiss="modal" href="#">开台</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- //开台窗口 -->
+				</div>
+				<!-- 食堂业务右侧 -->
+				<div class="o-p-t-2p o-t-p-right styw-middle-right percent-r1">
+					<div class="hall-people-p-n-time">
+						<!-- “餐台code” “餐台name” -->
+						<div class="h" id="tbl_home_tableName"></div>
+						<!-- “满载客位” “费用” -->
+						<div class="zn">
+							<div class="z" id="tbl_home_tableInfo_title"></div>
+							<div class="n" id="tbl_home_tableInfo_value"></div>
+						</div>
+						<div class="vertical-line"></div>
+						<div class="a"></div>
+						<!-- “单号” “就餐时间” -->
+						<div class="zn">
+							<div class="t" id="tbl_home_order_title"></div>
+							<div class="t" id="tbl_home_order_value"></div>
+						</div>
+					</div>
+					<div class="k-j-h-l-b-q-f-btn">
+						<div class="kj">
+							<div class="my-btn" id="tbl_home_btn_kt">
+								<a href="#">开台</a>
+							</div>
+								<div class="my-btn" id="tbl_home_btn_jz">
+								<a data-toggle="modal" data-target="#pay_home_id" href="">结账</a>
+							</div>
+	
+						</div>
+						<div class="hl">
+							<div class="my-btn" id="tbl_home_btn_zt">
+								<a data-toggle="modal" data-target="#pre_home_id" href="#">转台</a>
+							</div>
+							<div class="my-btn" id="tbl_home_btn_lt">
+								<a href="#">联台</a>
+							</div>
+							<div class="my-btn" id="tbl_home_btn_bt">
+								<a href="#">并台</a>
+							</div>
+							<div class="my-btn" id="tbl_home_btn_qt">
+								<a href="#">清台</a>
+							</div>
+							<div class="my-btn zd" id="tbl_home_btn_fzkt">
+								<a href="#">复制开台</a>
+							</div>
+	
+						</div>
+					</div>
+					<div class="cp-num-xj-xd-table">
+						<div class="t-table">
+							<table class="t">
+								<tr>
+									<td class="num"></td>
+									<td class="n">菜品</td>
+									<td class="c">数量</td>
+									<td class="p">小计</td>
+									<td class="g">下单</td>
+								</tr>
+							</table>
+						</div>
+						<div class="ctt-table tab-content">
+							<div id="tbl_home_menu"></div>
+						</div>
+					</div>
+					<div class="total-p-print-btn">
+						<div class="tp">总消费：<i id="tbl_home_consume">￥0.00</i></div>
+						<div class="p">
+							<div class="my-btn" id="tbl_home_btn_dyjd">
+								<a href="#">打印结单</a>
+							</div>
+						</div>
+					</div>
+					<div class="dc-print-yjd">
+						<div class="my-btn" id="tbl_home_btn_dc">
+							<a data-toggle="modal" href="">点菜</a>
+						</div>
+						<div class="my-btn print-yjd" id="tbl_home_btn_dyyjd">
+							<a href="#">打印预结单</a>
+						</div>
+	
+					</div>
+				</div>
+				<!-- //食堂业务右侧 -->
+			</div>
+			<!-- ////食堂业务 -->
+			
+			<!-- 清单 -->
+			<div id="qd" class="tab-pane one-tab-pane fade">
+					<div class="o-p-t-2p o-t-p-left styw-middle-left qd--middle-left percent-qd-left">
+					<!-- 清单下拉菜单 -->
+					<div class="qd-dropdown-continer">
+						<div class="items">
+							<div class="ud tp">
+								<div class="z">消费期间</div>
+								<div class="dd">
+									<input type="text" id="datepicker1">
+								</div>
+							</div>
+							<div class="ud fs hidden-md hidden-sm hidden-xs">
+								<div class="z">方式</div>
+								<div class="dd">
+									<div class="dropdown my-dropdown">
+										<a data-toggle="dropdown" href="#">全部</a>
+										<ul class="dropdown-menu fade" role="menu" aria-labelledby="dLabel">
+											<li><a href="#">方式一</a></li>
+											<li><a href="#">方式二</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="items">
+							<div class="ud tp">
+								<div class="z">至</div>
+								<div class="dd">
+									<input type="text" id="datepicker2">
+								</div>
+							</div>
+							<div class="ud hidden-md hidden-sm hidden-xs">
+								<div class="z">来源</div>
+								<div class="dd">
+									<div class="dropdown my-dropdown">
+										<a data-toggle="dropdown" href="#">全部</a>
+										<ul class="dropdown-menu fade" role="menu" aria-labelledby="dLabel">
+											<li><a href="#">来源一</a></li>
+											<li><a href="#">来源2</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="items hidden-md hidden-sm hidden-xs">
+							<div class="ud">
+								<div class="z">时段</div>
+								<div class="dd">
+									<div class="dropdown my-dropdown">
+										<a data-toggle="dropdown" href="#">全部</a>
+										<ul class="dropdown-menu fade" role="menu" aria-labelledby="dLabel">
+											<li><a href="#">时段一</a></li>
+											<li><a href="#">时段二</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div class="ud">
+								<div class="z">状态</div>
+								<div class="dd">
+									<div class="dropdown my-dropdown">
+										<a data-toggle="dropdown" href="#">全部</a>
+										<ul class="dropdown-menu fade" role="menu" aria-labelledby="dLabel">
+											<li><a href="#">状态一</a></li>
+											<li><a href="#">状态二</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="items items-dcytw">
+							<div class="ud">
+								<div class="z">点菜员</div>
+								<div class="dd">
+									<div class="dropdown my-dropdown">
+										<a data-toggle="dropdown" href="#">全部</a>
+										<ul class="dropdown-menu fade" role="menu" aria-labelledby="dLabel">
+											<li><a href="#">点菜员一</a></li>
+											<li><a href="#">点菜员二</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div class="ud tw">
+								<div class="z">台位</div>
+								<div class="dd">
+									<div class="dropdown my-dropdown">
+										<a data-toggle="dropdown" href="#">全部</a>
+										<ul class="dropdown-menu fade" role="menu" aria-labelledby="dLabel">
+											<li><a href="#">台位一</a></li>
+											<li><a href="#">台位二</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="items items-syy">
+							<div class="ud" style="opacity:0">
+								<div class="z">占位</div>
+								<div class="dd">
+									<div class="dropdown my-dropdown">
+										<a data-toggle="dropdown" href="#">全部</a>
+										<ul class="dropdown-menu fade" role="menu" aria-labelledby="dLabel">
+											<li><a href="#">台位一</a></li>
+											<li><a href="#">台位二</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div class="ud">
+								<div class="z">收银员</div>
+								<div class="dd">
+									<div class="dropdown my-dropdown">
+										<a data-toggle="dropdown" href="#">全部</a>
+										<ul class="dropdown-menu fade" role="menu" aria-labelledby="dLabel">
+											<li><a href="#">收银员一</a></li>
+											<li><a href="#">收银员二</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="items itemsa">
+							<div class="my-btn">
+								<a href="#">查询</a>
+							</div>
+						</div>
+					</div>
+					<!-- //清单下拉菜单 -->
+					<!-- 清单详细台位消费表 -->
+					<div id="qd-tw-details-table" class="qd-tw-details-table consume-num">
+						<div class="ti">
+							<table>
+								<tr>
+						            <th class="c1"></th>
+						            <th class="c2">消费单号</th>
+						            <th class="c3">消费时间</th>
+						            <th class="c4">台位</th>
+						            <th class="c5">主台位(并)</th>
+						            <th class="c6">状态</th>
+						            <th class="c7">人数</th>
+						            <th class="c8">方式</th>
+						            <th class="c9">来源</th>
+						            <th class="c10">点菜员</th>
+						            <th class="c11">收银员</th>
+						            <th class="c12">结账时间</th>
+						            <th class="c13">合计消费</th>
+						            <th class="c14">应收金额</th>
+						            <th class="c15">实收金额</th>
+						            <th class="c16">发票号</th>
+								</tr>
+								<tr data-toggle="tabb" data-targett="#consume-num-1">
+						            <td class="c1">1</td>
+						            <td class="c2">JN12345678</td>
+						            <td class="c3">02-02 11:11</td>
+						            <td class="c4">2号桌</td>
+						            <td class="c5">2号桌</td>
+						            <td class="c6">已结账</td>
+						            <td class="c7">3人</td>
+						            <td class="c8">预订开台</td>
+						            <td class="c9">微信</td>
+						            <td class="c10">001 张三三</td>
+						            <td class="c11">002 赵四四</td>
+						            <td class="c12">02-02 11:11</td>
+						            <td class="c13">￥112.22</td>
+						            <td class="c14">￥112.22</td>
+						            <td class="c15">￥112.22</td>
+						            <td class="c16">GS000</td>
+						        </tr>
+						        <tr data-toggle="tabb" data-targett="#consume-num-2">
+						            <td class="c1">1</td>
+						            <td class="c2">JN12345678</td>
+						            <td class="c3">02-02 11:11</td>
+						            <td class="c4">2号桌</td>
+						            <td class="c5">2号桌</td>
+						            <td class="c6">已结账</td>
+						            <td class="c7">3人</td>
+						            <td class="c8">预订开台</td>
+						            <td class="c9">微信</td>
+						            <td class="c10">001 张三三</td>
+						            <td class="c11">002 赵四四</td>
+						            <td class="c12">02-02 11:11</td>
+						            <td class="c13">￥112.22</td>
+						            <td class="c14">￥112.22</td>
+						            <td class="c15">￥112.22</td>
+						            <td class="c16">GS000</td>
+						        </tr>
+
+							</table>
+						</div>
+					</div>
+					<!-- //清单详细台位消费表 -->
+					<!-- 表下边的三个合计 -->
+						<div class="qd-three-total">
+							<i>合计消费</i><b>￥666.66</b>
+							<i>合计应收</i><b>￥666.66</b>
+							<i>合计实收</i><b>￥666.66</b>
+						</div>
+					<!-- //表下边的三个合计 -->
+				</div>
+				<!-- 清单右侧 -->
+				<div class="o-p-t-2p o-t-p-right styw-middle-right percent-qd-right">
+					<div class="qd-m-r-b-tab">
+                        <table>
+                            <tbody><tr>
+                                <td class="tar">消费单号</td>
+                                <td class="qd-m-r-b-color tal">JN12345678</td>
+                                <td class="qd-r-hide tar hidden-md hidden-sm hidden-xs">预订单号</td>
+                                <td class="qd-r-hide qd-m-r-b-color tal hidden-md hidden-sm hidden-xs">JN12345678</td>
+                            </tr>
+                            <tr class="qd-r-hide hidden-md hidden-sm hidden-xs">
+                                <td class="tar">台位</td>
+                                <td class="tal">3号桌并至2号桌</td>
+                                <td class="tar">人数</td>
+                                <td class="tal">2人</td>
+                            </tr>
+                            <tr>
+                                <td class="qd-r-hide tar hidden-md hidden-sm hidden-xs">时间</td>
+                                <td class="qd-r-hide tal hidden-md hidden-sm hidden-xs">02-02 11:11</td>
+                                <td class="tar">状态</td>
+                                <td class="tal"><span>已结账</span></td>
+                            </tr>
+                        </tbody></table>
+                    </div>
+                    <div class="qd-r-6-btn">
+                    	<div class="my-btn">
+							<a href="#">开发票</a>
+						</div>
+						<div class="my-btn">
+							<a data-toggle="modal" data-target="#bil_reversepay_id" href="#">反结账</a>
+						</div>
+						<div class="my-btn">
+							<a data-toggle="modal" data-target="#pil_ordrdetail_id" href="#">点菜详情</a>
+						</div>
+						<div class="my-btn">
+							<a href="#">收银补打</a>
+						</div>
+						<div class="my-btn">
+							<a href="#">传菜单补打</a>
+						</div>
+						<div class="my-btn">
+							<a data-toggle="modal" data-target="#bil_lateprint_id" href="#">后厨补打</a>
+						</div>
+                    </div>
+                    <div id="qd-all-about-money-3remark" class="qd-all-about-money-3remark">
+                    	<div id="qd-a-a-m-3r-scroll">
+	                    	<div class="qd-all-a-m">
+	                    		<table id="consume-num-1">
+	                    			<tr>
+	                    				<td>合计消费</td>
+	                    				<td><i>￥211.22</i></td>
+	                    				<td></td>
+	                    			</tr>
+	                    			<tr>
+	                    				<td colspan="3"><div class="dashed"></div></td>
+	                    			</tr>
+	                    			<tr>
+	                    				<td>会员折扣</td>
+	                    				<td>-￥31.33</td>
+	                    				<td></td>
+	                    			</tr>
+	                    			<tr>
+	                    				<td>菜品折扣</td>
+	                    				<td>-￥3.33</td>
+	                    				<td></td>
+	                    			</tr>
+	                    			<tr>
+	                    				<td>整单减免</td>
+	                    				<td></td>
+	                    				<td></td>
+	                    			</tr>
+	                    			<tr>
+	                    				<td>服务费</td>
+	                    				<td>+6.66</td>
+	                    				<td></td>
+	                    			</tr>
+	                    			<tr>
+	                    				<td>房间费</td>
+	                    				<td>+￥2.22</td>
+	                    				<td></td>
+	                    			</tr>
+	                    			<tr>
+	                    				<td>抹零金额</td>
+	                    				<td>-￥9.66</td>
+	                    				<td></td>
+	                    			</tr>
+	                    			<tr>
+	                    				<td>已付金额</td>
+	                    				<td>-￥0.00</td>
+	                    				<td class="tal">预订押金</td>
+	                    			</tr>
+	                    			<tr>
+	                    				<td>退菜金额</td>
+	                    				<td>-￥0.00</td>
+	                    				<td></td>
+	                    			</tr>
+	                    			<tr>
+	                    				<td colspan="3"><div class="dashed"></div></td>
+	                    			</tr>
+	                    			<tr>
+	                    				<td>应收金额</td>
+	                    				<td><i>￥166.33</i></td>
+	                    				<td></td>
+	                    			</tr>
+	                    			<tr>
+	                    				<td>收到金额</td>
+	                    				<td><i>￥500.22</i></td>
+	                    				<td></td>
+	                    			</tr>
+	                    			<tr>
+	                    				<td colspan="3"><div class="solid"></div></td>
+	                    			</tr>
+	                    			<tr>
+	                    				<td>现金支付</td>
+	                    				<td>-￥150.22</td>
+	                    				<td></td>
+	                    			</tr>
+	                    			<tr>
+	                    				<td>优惠券支付</td>
+	                    				<td>-￥50.00</td>
+	                    				<td></td>
+	                    			</tr>
+	                    			<tr>
+	                    				<td>现金找零</td>
+	                    				<td>-￥32.33</td>
+	                    				<td></td>
+	                    			</tr>
+	                    			<tr>
+	                    				<td colspan="3"><div class="dashed"></div></td>
+	                    			</tr>
+	                    			<tr>
+	                    				<td>实收金额</td>
+	                    				<td><i>￥168.22</i></td>
+	                    				<td></td>
+	                    			</tr>
+	                    		</table>
+	                    		<table id="consume-num-2" style="display:none;">
+	                    			<tr>
+	                    				<td>合计消费</td>
+	                    				<td><i>￥333.22</i></td>
+	                    				<td></td>
+	                    			</tr>
+	                    			<tr>
+	                    				<td colspan="3"><div class="dashed"></div></td>
+	                    			</tr>
+	                    			<tr>
+	                    				<td>会员折扣</td>
+	                    				<td>-￥31.33</td>
+	                    				<td></td>
+	                    			</tr>
+	                    			<tr>
+	                    				<td>菜品折扣</td>
+	                    				<td>-￥3.33</td>
+	                    				<td></td>
+	                    			</tr>
+	                    			<tr>
+	                    				<td>整单减免</td>
+	                    				<td></td>
+	                    				<td></td>
+	                    			</tr>
+	                    			<tr>
+	                    				<td>服务费</td>
+	                    				<td>+6.66</td>
+	                    				<td></td>
+	                    			</tr>
+	                    			<tr>
+	                    				<td>房间费</td>
+	                    				<td>+￥2.22</td>
+	                    				<td></td>
+	                    			</tr>
+	                    			<tr>
+	                    				<td>抹零金额</td>
+	                    				<td>-￥9.66</td>
+	                    				<td></td>
+	                    			</tr>
+	                    			<tr>
+	                    				<td>已付金额</td>
+	                    				<td>-￥0.00</td>
+	                    				<td class="tal">预订押金</td>
+	                    			</tr>
+	                    			<tr>
+	                    				<td>退菜金额</td>
+	                    				<td>-￥0.00</td>
+	                    				<td></td>
+	                    			</tr>
+	                    			<tr>
+	                    				<td colspan="3"><div class="dashed"></div></td>
+	                    			</tr>
+	                    			<tr>
+	                    				<td>应收金额</td>
+	                    				<td><i>￥166.33</i></td>
+	                    				<td></td>
+	                    			</tr>
+	                    			<tr>
+	                    				<td>收到金额</td>
+	                    				<td><i>￥500.22</i></td>
+	                    				<td></td>
+	                    			</tr>
+	                    			<tr>
+	                    				<td colspan="3"><div class="solid"></div></td>
+	                    			</tr>
+	                    			<tr>
+	                    				<td>现金支付</td>
+	                    				<td>-￥150.22</td>
+	                    				<td></td>
+	                    			</tr>
+	                    			<tr>
+	                    				<td>优惠券支付</td>
+	                    				<td>-￥50.00</td>
+	                    				<td></td>
+	                    			</tr>
+	                    			<tr>
+	                    				<td>现金找零</td>
+	                    				<td>-￥32.33</td>
+	                    				<td></td>
+	                    			</tr>
+	                    			<tr>
+	                    				<td colspan="3"><div class="dashed"></div></td>
+	                    			</tr>
+	                    			<tr>
+	                    				<td>实收金额</td>
+	                    				<td><i>￥168.22</i></td>
+	                    				<td></td>
+	                    			</tr>
+	                    		</table>
+	                    	</div>
+	                    	<div class="qd-3remark">
+	                    		<b>整单备注</b><i></i>
+	                    		<b>打折备注</b><i></i>
+	                    		<b>结账备注</b><i></i>
+	                    	</div>
+	                    </div>
+                    </div>
+				</div>
+				<!-- //清单右侧 -->
+			</div>
+			<!-- //清单 -->
+			<div id="hy" class="tab-pane one-tab-pane fade">会员</div>
+			<!-- 预订 首页tab -->
+			<div id="yd" class="tab-pane one-tab-pane pre_home_indexTab-wrap fade">
+				<div class="pre_home_indexTab">
+					<div class="p-h-iT-l">
+						<div id="phit-wait-confirm-id" class="phit-wait-confirm">
+							<div class="phitwc-TH-t">
+								待确认预订单
+							</div>
+							<div class="phitwc-title">
+								<table class="phitwc-title-tab">
+									<tr>
+										<th class="col1"> </th>
+										<th class="col2">预订单号</th>
+										<th class="col3">预订人</th>
+										<th class="col4">电话</th>
+										<th class="col5 hidden1460">下单时间</th>
+										<th class="col6">预抵时间</th>
+										<th class="col7 hidden1460"">人数</th>
+										<th class="col8 hidden1460"">来源</th>
+										<th class="col9">台位</th>
+										<th class="col10">点菜</th>
+										<th class="col11 hidden1460"">支付</th>
+										<th class="col12">待确认</th>
+									</tr>
+								</table>
+							</div>
+							<div id="phitwc-content-id" class="phitwc-content trClickChangeColor">
+								<table id="phitwc-content-tab-id" class="phitwc-content-tab">
+									<tr data-target="#p-h-iT-r-id1">
+										<td class="col1">1</td>
+										<td class="col2">JN12345678</td>
+										<td class="col3">张三</td>
+										<td class="col4">12345678900</td>
+										<td class="col5 hidden1460"">02-25 12:12</td>
+										<td class="col6">02-25 12:12</td>
+										<td class="col7 hidden1460"">5人</td>
+										<td class="col8 hidden1460"">App</td>
+										<td class="col9">3号桌</td>
+										<td class="col10">已点</td>
+										<td class="col11 hidden1460""></td>
+										<td class="col12">
+											<div class="my-btn">
+												<a id="cfmBtn1" class="phitwc-confirmBtn" href="#">确认订单</a>
+											</div>
+										</td>
+									</tr>
+									<tr data-target="#p-h-iT-r-id2">
+										<td class="col1">1</td>
+										<td class="col2">JN12345678</td>
+										<td class="col3">张三</td>
+										<td class="col4">12345678900</td>
+										<td class="col5 hidden1460"">02-25 12:12</td>
+										<td class="col6">02-25 12:12</td>
+										<td class="col7 hidden1460"">5人</td>
+										<td class="col8 hidden1460"">App</td>
+										<td class="col9">3号桌</td>
+										<td class="col10">已点</td>
+										<td class="col11 hidden1460""></td>
+										<td class="col12">
+											<div class="my-btn">
+												<a id="cfmBtn2" class="phitwc-confirmBtn" href="#">确认订单</a>
+											</div>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+						<div class="phit-p-time">
+							<i>预订日期</i> <input id="phit-p-t-ipt" type="text">
+							<div class="my-btn">
+								<a href="#">搜索</a>
+							</div>
+						</div>
+						<div class="phitwc-TH-t phitwc-YuDingRC">
+							预订日程
+							<div>
+								<i><a href="#">一览</a></i>
+								<i><a data-toggle="modal" data-target="#pre_home_id" href="#">新增</a></i>
+								<i><a data-toggle="modal" data-target="#pre_home_id" href="#">修改</a></i>
+								<i><a href="#">取消</a></i>
+								<i><a href="#">删除</a></i>
+								<i><a href="#">恢复</a></i>
+								<i><a href="#">发送短信</a></i>
+							</div>
+						</div>
+						<div id="phitwc-YDRC-TW-id" class="phitwc-YDRC-TW">
+							<div class="phi-TWXX">
+								<table>
+									<tr class="row1">
+										<td colspan="4">台位信息</td>
+									</tr>
+									<tr class="row2">
+										<td class="cola hidden-xs hidden-sm hidden-md"> </td>
+										<td class="colb">区域</td>
+										<td class="colc">餐台</td>
+										<td class="cold hidden-xs hidden-sm hidden-md">满客数</td>
+									</tr>
+									<tr class="row3">
+										<td class="hidden-xs hidden-sm hidden-md">1</td>
+										<td>大厅</td>
+										<td>001 珍珠泉</td>
+										<td class="hidden-xs hidden-sm hidden-md">6</td>
+									</tr>
+									<tr class="row3">
+										<td class="hidden-xs hidden-sm hidden-md">2</td>
+										<td>包间</td>
+										<td>002 珍珠泉</td>
+										<td class="hidden-xs hidden-sm hidden-md">6</td>
+									</tr>
+								</table>
+							</div>
+							<div class="phi-day phi-day1">
+								<table>
+									<tr class="row1">
+										<td colspan="3">2016-04-04（星期六）</td>
+									</tr>
+									<tr class="row2">
+										<td>早市</td>
+										<td>午市</td>
+										<td>晚市</td>
+									</tr>
+									<tr class="row3">
+										<td class="phi-d-click-bd"><a data-toggle="tab" class="phi-wait-cfm cfmBtn1" href="#p-h-iT-r-id1">
+											<b>待确认</b>
+											<br>刘先生
+											<br>13365478965</a>
+										</td>
+										<td><a data-toggle="tab" class="phi-pre-ing" href="#p-h-iT-r-id2">
+											<b>预订中</b>
+											<br>王先生
+											<br>13365478965</a>
+										</td>
+										<td><a data-toggle="tab" href="#p-h-iT-r-id3"></a></td>
+									</tr>
+									<tr class="row3">
+										<td><a class="phi-out-date" href="#"><i>已过期</i></a></td>
+										<td><a class="phi-arrive" href="#"><i>已到店</i></a></td>
+										<td><a href="#"></a></td>
+									</tr>
+
+								</table>
+							</div>
+							<div class="phi-day phi-day2">
+								<table>
+									<tr class="row1">
+										<td colspan="3">2016-04-04（星期六）</td>
+									</tr>
+									<tr class="row2">
+										<td>早市</td>
+										<td>午市</td>
+										<td>晚市</td>
+									</tr>
+									<tr class="row3">
+										<td><a class="phi-out-date" href="#">已过期</a></td>
+										<td><a class="phi-arrive" href="#">已到店</a></td>
+										<td><a href="#"></a></td>
+									</tr>
+									<tr class="row3">
+										<td><a class="phi-wait-cfm cfmBtn2" href="#">
+											<b>待确认</b>
+											<br>刘先生
+											<br>13365478965</a>
+										</td>
+										<td><a class="phi-pre-ing" href="#">
+											<b>预订中</b>
+											<br>刘先生
+											<br>13365478965</a>
+										</td>
+										<td><a href="#"></a></td>
+									</tr>
+								</table>
+							</div>
+							<div class="phi-day phi-day1">
+								<table>
+									<tr class="row1">
+										<td colspan="3">2016-04-04（星期六）</td>
+									</tr>
+									<tr class="row2">
+										<td>早市</td>
+										<td>午市</td>
+										<td>晚市</td>
+									</tr>
+									<tr class="row3">
+										<td><a class="phi-wait-cfm" href="#">
+											<b>待确认</b>
+											<br>刘先生
+											<br>13365478965</a>
+										</td>
+										<td><a class="phi-pre-ing" href="#">
+											<b>预订中</b>
+											<br>刘先生
+											<br>13365478965</a>
+										</td>
+										<td><a href="#"></a></td>
+									</tr>
+									<tr class="row3">
+										<td><a class="phi-out-date" href="#"><i>已过期</i></a></td>
+										<td><a class="phi-arrive" href="#"><i>已到店</i></a></td>
+										<td><a href="#"></a></td>
+									</tr>
+
+								</table>
+							</div>
+							<div class="phi-day phi-day2">
+								<table>
+									<tr class="row1">
+										<td colspan="3">2016-04-04（星期六）</td>
+									</tr>
+									<tr class="row2">
+										<td>早市</td>
+										<td>午市</td>
+										<td>晚市</td>
+									</tr>
+									<tr class="row3">
+										<td><a class="phi-out-date" href="#">已过期</a></td>
+										<td><a class="phi-arrive" href="#">已到店</a></td>
+										<td><a href="#"></a></td>
+									</tr>
+									<tr class="row3">
+										<td><a class="phi-wait-cfm" href="#">
+											<b>待确认</b>
+											<br>刘先生
+											<br>13365478965</a>
+										</td>
+										<td><a class="phi-pre-ing" href="#">
+											<b>预订中</b>
+											<br>刘先生
+											<br>13365478965</a>
+										</td>
+										<td><a href="#"></a></td>
+									</tr>
+								</table>
+							</div>
+							<div class="phi-day phi-day1">
+								<table>
+									<tr class="row1">
+										<td colspan="3">2016-04-04（星期六）</td>
+									</tr>
+									<tr class="row2">
+										<td>早市</td>
+										<td>午市</td>
+										<td>晚市</td>
+									</tr>
+									<tr class="row3">
+										<td><a class="phi-wait-cfm" href="#">
+											<b>待确认</b>
+											<br>刘先生
+											<br>13365478965</a>
+										</td>
+										<td><a class="phi-pre-ing" href="#">
+											<b>预订中</b>
+											<br>刘先生
+											<br>13365478965</a>
+										</td>
+										<td><a href="#"></a></td>
+									</tr>
+									<tr class="row3">
+										<td><a class="phi-out-date" href="#"><i>已过期</i></a></td>
+										<td><a class="phi-arrive" href="#"><i>已到店</i></a></td>
+										<td><a href="#"></a></td>
+									</tr>
+
+								</table>
+							</div>
+							<div class="phi-day phi-day2">
+								<table>
+									<tr class="row1">
+										<td colspan="3">2016-04-04（星期六）</td>
+									</tr>
+									<tr class="row2">
+										<td>早市</td>
+										<td>午市</td>
+										<td>晚市</td>
+									</tr>
+									<tr class="row3">
+										<td><a class="phi-out-date" href="#">已过期</a></td>
+										<td><a class="phi-arrive" href="#">已到店</a></td>
+										<td><a href="#"></a></td>
+									</tr>
+									<tr class="row3">
+										<td><a class="phi-wait-cfm" href="#">
+											<b>待确认</b>
+											<br>刘先生
+											<br>13365478965</a>
+										</td>
+										<td><a class="phi-pre-ing" href="#">
+											<b>预订中</b>
+											<br>刘先生
+											<br>13365478965</a>
+										</td>
+										<td><a href="#"></a></td>
+									</tr>
+								</table>
+							</div>
+							<div class="phi-day phi-day1">
+								<table>
+									<tr class="row1">
+										<td colspan="3">2016-04-04（星期六）</td>
+									</tr>
+									<tr class="row2">
+										<td>早市</td>
+										<td>午市</td>
+										<td>晚市</td>
+									</tr>
+									<tr class="row3">
+										<td><a class="phi-wait-cfm" href="#">
+											<b>待确认</b>
+											<br>刘先生
+											<br>13365478965</a>
+										</td>
+										<td><a class="phi-pre-ing" href="#">
+											<b>预订中</b>
+											<br>刘先生
+											<br>13365478965</a>
+										</td>
+										<td><a href="#"></a></td>
+									</tr>
+									<tr class="row3">
+										<td><a class="phi-out-date" href="#"><i>已过期</i></a></td>
+										<td><a class="phi-arrive" href="#"><i>已到店</i></a></td>
+										<td><a href="#"></a></td>
+									</tr>
+
+								</table>
+							</div>
+						</div>
+					</div>
+					<div id="p-h-iT-r-id1" class="p-h-iT-r fade active in">
+						<div class="phitr-title">
+							基本信息
+						</div>
+						<div class="phitr-2-tab-w">
+							<table class="phitr2-tab1">
+								<tr>
+									<td class="col1">预订单号</td>
+									<td class="col2">YD00000000</td>
+								</tr>
+								<tr>
+									<td class="col1">预订人</td>
+									<td class="col2">刘先生（13333333333）</td>
+								</tr>
+								<tr>
+									<td class="col1">预抵时间</td>
+									<td class="col2">2016-16-16 16:16</td>
+								</tr>
+								<tr>
+									<td class="col1">订金</td>
+									<td class="col2">￥50.00</td>
+								</tr>
+								<tr>
+									<td class="col1">人数</td>
+									<td class="col2">10人</td>
+								</tr>
+								<tr>
+									<td class="col1">预订来源</td>
+									<td class="col2">吧台</td>
+								</tr>
+							</table>
+							<div class="phitr-line"></div>
+							<table class="phitr2-tab2">
+								<tr>
+									<td class="col1">是否确认</td>
+									<td class="col2"><i>待确认</i></td>
+									<td class="col3">是否到达</td>
+									<td class="col4"><i>未到达</i></td>
+								</tr>
+								<tr class="hidden-xs hidden-sm hidden-md">
+									<td class="col1">是否食堂外带</td>
+									<td class="col2"><i>是</i></td>
+									<td class="col3">短信</td>
+									<td class="col4"><i>未发送</i></td>
+								</tr>
+							</table>
+						</div>
+						<div class="phitr-title phitr-t-TWXX">
+							台位信息
+							<div class="my-btn">
+								<a href="#">预订台位</a>
+							</div>
+						</div>
+						<div class="phitr-TWXX-YDTW phitr-TWXX-YDTW22">
+							<div class="phitr-T-Y-t">
+								<table>
+									<tr>
+										<td class="col1"></td>
+										<td class="col2">台位编号</td>
+										<td class="col3">台位名称</td>
+										<td class="col4">区域</td>
+									</tr>
+								</table>
+							</div>
+							<div id="phitr-T-Y-c-id" class="phitr-T-Y-c trClickChangeColor">
+								<table>
+									<tr>
+										<td class="col1">1</td>
+										<td class="col2">001</td>
+										<td class="col3">九寨沟</td>
+										<td class="col4">大厅</td>
+									</tr>
+									<tr>
+										<td class="col1">2</td>
+										<td class="col2">002</td>
+										<td class="col3">九寨沟</td>
+										<td class="col4">大厅</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+						<div class="phitr-title phitr-t-TWXX">
+							菜品信息
+							<div class="my-btn">
+								<a data-toggle="modal" data-target="#dianCai-modal" href="#">预订菜品</a>
+							</div>
+						</div>
+						<div class="phitr-TWXX-YDTW phitr-CPXX-YDCP">
+							<div class="phitr-T-Y-t">
+								<table>
+									<tr>
+										<td class="cola hidden-xs hidden-sm hidden-md"></td>
+										<td class="colb">菜品编号</td>
+										<td class="colc">菜品名称</td>
+										<td class="cold hidden-xs hidden-sm hidden-md">数量</td>
+										<td class="cole hidden-xs hidden-sm hidden-md">单价</td>
+									</tr>
+								</table>
+							</div>
+							<div id="phitr-T-Y-c2-id" class="phitr-T-Y-c trClickChangeColor">
+								<table>
+									<tr>
+										<td class="cola hidden-xs hidden-sm hidden-md">1</td>
+										<td class="colb">0001</td>
+										<td class="colc">西红柿炒鸡蛋</td>
+										<td class="cold hidden-xs hidden-sm hidden-md">1份</td>
+										<td class="cole hidden-xs hidden-sm hidden-md">￥120</td>
+									</tr>
+									<tr>
+										<td class="cola hidden-xs hidden-sm hidden-md">2</td>
+										<td class="colb">0002</td>
+										<td class="colc">西红柿炒鸡蛋蛋</td>
+										<td class="cold hidden-xs hidden-sm hidden-md">1份</td>
+										<td class="cole hidden-xs hidden-sm hidden-md">￥12</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div id="p-h-iT-r-id2" class="p-h-iT-r fade">
+						<div class="phitr-title">
+							基本信息
+						</div>
+						<div class="phitr-2-tab-w">
+							<table class="phitr2-tab1">
+								<tr>
+									<td class="col1">预订单号</td>
+									<td class="col2">YD00000000</td>
+								</tr>
+								<tr>
+									<td class="col1">预订人</td>
+									<td class="col2">王先生（13333333333）</td>
+								</tr>
+								<tr>
+									<td class="col1">预抵时间</td>
+									<td class="col2">2016-16-16 16:16</td>
+								</tr>
+								<tr>
+									<td class="col1">订金</td>
+									<td class="col2">￥50.00</td>
+								</tr>
+								<tr>
+									<td class="col1">人数</td>
+									<td class="col2">10人</td>
+								</tr>
+								<tr>
+									<td class="col1">预订来源</td>
+									<td class="col2">吧台</td>
+								</tr>
+							</table>
+							<div class="phitr-line"></div>
+							<table class="phitr2-tab2">
+								<tr>
+									<td class="col1">是否确认</td>
+									<td class="col2"><i>已确认</i></td>
+									<td class="col3">是否到达</td>
+									<td class="col4"><i>未到达</i></td>
+								</tr>
+								<tr class="hidden-xs hidden-sm hidden-md">
+									<td class="col1">是否食堂外带</td>
+									<td class="col2"><i>是</i></td>
+									<td class="col3">短信</td>
+									<td class="col4"><i>未发送</i></td>
+								</tr>
+							</table>
+						</div>
+						<div class="phitr-title phitr-t-TWXX">
+							台位信息
+							<div class="my-btn">
+								<a href="#">预订台位</a>
+							</div>
+						</div>
+						<div class="phitr-TWXX-YDTW">
+							<div class="phitr-T-Y-t">
+								<table>
+									<tr>
+										<td class="col1"></td>
+										<td class="col2">台位编号</td>
+										<td class="col3">台位名称</td>
+										<td class="col4">区域</td>
+									</tr>
+								</table>
+							</div>
+							<div id="phitr-T-Y-c-id" class="phitr-T-Y-c trClickChangeColor">
+								<table>
+									<tr>
+										<td class="col1">1</td>
+										<td class="col2">001</td>
+										<td class="col3">九寨沟</td>
+										<td class="col4">大厅</td>
+									</tr>
+									<tr>
+										<td class="col1">2</td>
+										<td class="col2">002</td>
+										<td class="col3">九寨沟</td>
+										<td class="col4">大厅</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+						<div class="phitr-title phitr-t-TWXX">
+							菜品信息
+							<div class="my-btn">
+								<a data-toggle="modal" data-target="#dianCai-modal" href="#">预订菜品</a>
+							</div>
+						</div>
+						<div class="phitr-TWXX-YDTW phitr-CPXX-YDCP">
+							<div class="phitr-T-Y-t">
+								<table>
+									<tr>
+										<td class="cola hidden-xs hidden-sm hidden-md"></td>
+										<td class="colb">菜品编号</td>
+										<td class="colc">菜品名称</td>
+										<td class="cold hidden-xs hidden-sm hidden-md">数量</td>
+										<td class="cole hidden-xs hidden-sm hidden-md">单价</td>
+									</tr>
+								</table>
+							</div>
+							<div id="phitr-T-Y-c2-id" class="phitr-T-Y-c trClickChangeColor">
+								<table>
+									<tr>
+										<td class="cola hidden-xs hidden-sm hidden-md">1</td>
+										<td class="colb">0001</td>
+										<td class="colc">西红柿炒鸡蛋</td>
+										<td class="cold hidden-xs hidden-sm hidden-md">1份</td>
+										<td class="cole hidden-xs hidden-sm hidden-md">￥120</td>
+									</tr>
+									<tr>
+										<td class="cola hidden-xs hidden-sm hidden-md">2</td>
+										<td class="colb">0002</td>
+										<td class="colc">西红柿炒鸡蛋蛋</td>
+										<td class="cold hidden-xs hidden-sm hidden-md">1份</td>
+										<td class="cole hidden-xs hidden-sm hidden-md">￥12</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div id="p-h-iT-r-id3" class="p-h-iT-r fade">
+						<div class="phitr-title">
+							基本信息
+						</div>
+						<div class="phitr-2-tab-w">
+							<table class="phitr2-tab1">
+								<tr>
+									<td class="col1">预订单号</td>
+									<td class="col2">YD00000000</td>
+								</tr>
+								<tr>
+									<td class="col1">预订人</td>
+									<td class="col2">无（13333333333）</td>
+								</tr>
+								<tr>
+									<td class="col1">预抵时间</td>
+									<td class="col2">2016-16-16 16:16</td>
+								</tr>
+								<tr>
+									<td class="col1">订金</td>
+									<td class="col2">￥50.00</td>
+								</tr>
+								<tr>
+									<td class="col1">人数</td>
+									<td class="col2">10人</td>
+								</tr>
+								<tr>
+									<td class="col1">预订来源</td>
+									<td class="col2">吧台</td>
+								</tr>
+							</table>
+							<div class="phitr-line"></div>
+							<table class="phitr2-tab2">
+								<tr>
+									<td class="col1">是否确认</td>
+									<td class="col2"><i>未知</i></td>
+									<td class="col3">是否到达</td>
+									<td class="col4"><i>未到达</i></td>
+								</tr>
+								<tr class="hidden-xs hidden-sm hidden-md">
+									<td class="col1">是否食堂外带</td>
+									<td class="col2"><i>是</i></td>
+									<td class="col3">短信</td>
+									<td class="col4"><i>未发送</i></td>
+								</tr>
+							</table>
+						</div>
+						<div class="phitr-title phitr-t-TWXX">
+							台位信息
+							<div class="my-btn">
+								<a href="#">预订台位</a>
+							</div>
+						</div>
+						<div class="phitr-TWXX-YDTW">
+							<div class="phitr-T-Y-t">
+								<table>
+									<tr>
+										<td class="col1"></td>
+										<td class="col2">台位编号</td>
+										<td class="col3">台位名称</td>
+										<td class="col4">区域</td>
+									</tr>
+								</table>
+							</div>
+							<div id="phitr-T-Y-c-id" class="phitr-T-Y-c trClickChangeColor">
+								<table>
+									<tr>
+										<td class="col1">1</td>
+										<td class="col2">001</td>
+										<td class="col3">九寨沟</td>
+										<td class="col4">大厅</td>
+									</tr>
+									<tr>
+										<td class="col1">2</td>
+										<td class="col2">002</td>
+										<td class="col3">九寨沟</td>
+										<td class="col4">大厅</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+						<div class="phitr-title phitr-t-TWXX">
+							菜品信息
+							<div class="my-btn">
+								<a data-toggle="modal" data-target="#dianCai-modal" href="#">预订菜品</a>
+							</div>
+						</div>
+						<div class="phitr-TWXX-YDTW phitr-CPXX-YDCP">
+							<div class="phitr-T-Y-t">
+								<table>
+									<tr>
+										<td class="cola hidden-xs hidden-sm hidden-md"></td>
+										<td class="colb">菜品编号</td>
+										<td class="colc">菜品名称</td>
+										<td class="cold hidden-xs hidden-sm hidden-md">数量</td>
+										<td class="cole hidden-xs hidden-sm hidden-md">单价</td>
+									</tr>
+								</table>
+							</div>
+							<div id="phitr-T-Y-c2-id" class="phitr-T-Y-c trClickChangeColor">
+								<table>
+									<tr>
+										<td class="cola hidden-xs hidden-sm hidden-md">1</td>
+										<td class="colb">0001</td>
+										<td class="colc">西红柿炒鸡蛋</td>
+										<td class="cold hidden-xs hidden-sm hidden-md">1份</td>
+										<td class="cole hidden-xs hidden-sm hidden-md">￥120</td>
+									</tr>
+									<tr>
+										<td class="cola hidden-xs hidden-sm hidden-md">2</td>
+										<td class="colb">0002</td>
+										<td class="colc">西红柿炒鸡蛋蛋</td>
+										<td class="cold hidden-xs hidden-sm hidden-md">1份</td>
+										<td class="cole hidden-xs hidden-sm hidden-md">￥12</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- //预订 首页tab -->
+			<div id="gq" class="tab-pane one-tab-pane fade">沽清</div>
+			<div id="bb" class="tab-pane one-tab-pane fade">报表</div>
+			<div id="sz" class="tab-pane one-tab-pane fade">设置</div>
+			<!-- 交班 -->
+			<div id="jb" class="tab-pane one-tab-pane sft_home fade">
+				<div class="sft-top-info">
+					<div class="sft-dangBanT">当班信息</div>
+					<div class="vertical-line"></div>
+					<div class="sft-dangBanI">
+						<div class="i1">
+							<i>营业日期</i>2016-05-05
+							<i>收银台</i>02
+							<i>交班人</i>张三三
+						</div>
+						<div class="i2">
+							<i>当班时间</i>2016-05-05 05:05 至 2016-05-05 05:05
+						</div>
+					</div>
+					<div class="sft_history-btn">
+						<div class="my-btn">
+							<a data-toggle="modal" data-target="#sft_history_id" href="#">交班历史记录</a>
+						</div>
+					</div>
+				</div>
+				<div class="sft_home-main">
+					<div id="sft_home-m-left" class="sft_home-m-left">
+						<div class="sft_home-tab-c">
+							<div class="t g">本班营业情况</div>
+							<div class="c">
+								<table class="sft_home-yingYe-table">
+									<tr>
+										<td>前班交接</td>
+										<td>100.00</td>
+										<td>赠送金额</td>
+										<td>100.00</td>
+									</tr>
+									<tr>
+										<td>消费总额</td>
+										<td>1234.00</td>
+										<td>包房费</td>
+										<td>23.00</td>
+									</tr>
+									<tr>
+										<td>消费单数</td>
+										<td>1234</td>
+										<td>服务费</td>
+										<td>123.00</td>
+									</tr>
+									<tr>
+										<td>单均消费</td>
+										<td>231.00</td>
+										<td>减免金额</td>
+										<td>231.00</td>
+									</tr>
+									<tr>
+										<td>消费人数</td>
+										<td>231</td>
+										<td>抹零金额</td>
+										<td>33.33</td>
+									</tr>
+									<tr>
+										<td>人均消费</td>
+										<td>123.00</td>
+										<td>折扣金额</td>
+										<td>123.00</td>
+									</tr>
+									<tr>
+										<td>预订押金</td>
+										<td>50.00</td>
+										<td>实收金额</td>
+										<td>123.00</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+						<div class="sft_home-tab-c">
+							<div class="t y">本班收款情况</div>
+							<div class="c">
+								<table class="sft_home-shouKuan-table">
+									<tr>
+										<th>收款类型</th>
+										<th>笔数</th>
+										<th>金额</th>
+									</tr>
+									<tr>
+										<td class="tal">现金</td>
+										<td>10</td>
+										<td>1300.00</td>
+									</tr>
+									<tr>
+										<td>前班交接</td>
+										<td>1</td>
+										<td>100.00</td>
+									</tr>
+									<tr>
+										<td>本班收款</td>
+										<td>5</td>
+										<td>1000.00</td>
+									</tr>
+									<tr>
+										<td>会员充值</td>
+										<td>2</td>
+										<td>300.00</td>
+									</tr>
+									<tr>
+										<td>会员卡退款</td>
+										<td>1</td>
+										<td>-500.00</td>
+									</tr>
+									<tr>
+										<td>预订押金</td>
+										<td>1</td>
+										<td>50.00</td>
+									</tr>
+									<tr>
+										<td class="tal">银行卡</td>
+										<td>123</td>
+										<td>1231.11</td>
+									</tr>
+									<tr>
+										<td class="tal">代金券</td>
+										<td>2</td>
+										<td>200.00</td>
+									</tr>
+									<tr>
+										<td class="tal">优惠券</td>
+										<td>2</td>
+										<td>80.00</td>
+									</tr>
+									<tr>
+										<td colspan="3"><i>实收金额</i>1234.12</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+						<div class="sft_home-tab-c">
+							<div class="t g">本班会员情况</div>
+							<div class="c">
+								<table class="sft_home-huiYuan-table">
+									<tr>
+										<th>会员开卡数</th>
+										<th>会员充值金额</th>
+										<th>充值方式</th>
+									</tr>
+									<tr>
+										<td>2</td>
+										<td>300.00</td>
+										<td>现金</td>
+									</tr>
+									<tr>
+										<td>1</td>
+										<td>1000.00</td>
+										<td>银行卡</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+						<div class="sft_home-tab-c">
+							<div class="t y">本班挂账情况</div>
+							<div class="c">
+								<table class="sft_home-guaZhang-table">
+									<tr>
+										<th>挂账单位</th>
+										<th>挂账人</th>
+										<th>金额</th>
+										<th>累计挂账</th>
+									</tr>
+									<tr>
+										<td>山东大学</td>
+										<td>张三</td>
+										<td>252.21</td>
+										<td>1234.25</td>
+									</tr>
+									<tr>
+										<td>阿里巴巴</td>
+										<td>马云</td>
+										<td>2354.25</td>
+										<td>9254.36</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+					<div class="sft_home-m-right">
+						<div class="sft_home-up-down-DJD">
+							上缴营业款<i>1300.00</i>
+							<br>下放营业款<i>100.00</i>
+							<br>待交代金额<b>￥100.00</b>
+						</div>
+						<div class="sft_home-textarea">
+							<textarea name="" id="" placeholder="交班备注..."></textarea>
+						</div>
+						<div class="sft_home-KQX-btn-box">
+							<div>
+								<div class="my-btn">
+									<a data-toggle="modal" data-target="#sft_check_id" href="#">交班对账单</a>
+								</div>
+								<div class="my-btn">
+									<a href="#">交班并退出</a>
+								</div>
+								<div class="my-btn">
+									<a href="#">开钱箱</a>
+								</div>
+								<div class="my-btn">
+									<a href="#">日　结</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- //交班 -->
+			<div id="ht" class="tab-pane one-tab-pane fade">后台管理</div>
+		</div><!-- 中间的可切换的tab，分左右两部分 end -->
+		<div class="footer-info-c">
+			<div class="wifi-time" id="timeShow"></div>
+				<div class="warn-info">系统无法连接打印机，请确认！【详细】</div>
+		</div>
+
+
+
+
+
+
+
+
+
+
+	</div><!-- wrapper end -->
+	<!-- 点菜 -->
+	<div id="dianCai-modal" class="wrapper-dianCai modal mz fade" aria-hidden="true" style="">
+		<div class="dc-system-name">
+			<div class="l-logo">美食餐饮云系统 V1.0.1【点菜】</div>
+			<div class="r-close-btn-modal-dismiss" data-dismiss="modal"></div>
+		</div>
+		<!-- 桌号、单号 -->
+		<div class="dc-zhuoHao-danHao">
+			<div class="h">桌号</div>
+			<div class="t">
+				<div class="dropdown my-dropdown">
+					<a id="odr_home_selTable" data-toggle="dropdown" href="#">霸王厅</a>
+					<ul class="dropdown-menu fade" role="menu" aria-labelledby="dLabel" id="odr_home_openTables">
+					</ul>
+				</div>
+			</div>
+			<div class="h">单号</div>
+			<div class="t">
+				<div class="dropdown">
+					<a id="odr_home_itemsCode" data-toggle="dropdown" href="#"></a>
+				</div>
+			</div>
+			<div class="my-btn">
+				<a href="#">历史消费</a>
+			</div>
+		</div>
+		<!-- //桌号、单号 -->
+		<div class="dc-main-continer">
+			<div class="dc-main-ctnr-l">
+				<div class="dc-num-ziDai-wine">
+					<div class="n">点菜数量（<span id="odr_home_dishnumber">5</span>）</div>
+					<div class="w"><label for="ziDai-wine"><b><i><input id="ziDai-wine" type="checkbox"></i></b>是否自带酒水</label></div>
+				</div>
+				<div class="dc-ordered-cai-detail">
+					<div id="dc-ordered-cai-detail-c" class="dc-ordered-cai-detail-c">
+						<div class="th">
+							<table>
+								<tr>
+									<th class="l"></th>
+									<th class="n">菜品</th>
+									<th class="r">要求</th>
+									<th class="s">状态</th>
+									<th class="c">数量</th>
+									<th class="p hidden-xs hidden-sm hidden-md">单价</th>
+									<th class="o">下单</th>
+								</tr>
+							</table>
+						</div>
+						<div id="dc-ordered-cai-detail-scr" class="scr">
+							<div class="scr2">
+								<table id="incert-cai"></table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="should-pay-LengRe">
+					<div class="spLR">
+						<span>应付：<b id="odr_home_sumAmount">￥120.00</b></span>
+						<div class="my-btn">
+							<a id="odr_home_btn_Immediate" href="#">冷启热叫</a>
+						</div>
+					</div>
+					<div class="xyz">
+						<i>消费</i>￥<span id="odr_home_xiaofei">20.00</span>
+						<i>赠送</i>￥<span id="odr_home_gift">20.00</span>
+					</div>
+				</div>
+				<div class="daYin-jeZhang-lD">
+					<div class="my-btn disable">
+						<a href="#">打印</a>
+					</div>
+					<div class="my-btn">
+						<a data-toggle="modal" data-target="#pay_home_id" href="#">结账</a>
+					</div>
+					<div class="my-btn">
+						<a id="odr_homt_btn_Submitted" href="#">落单</a>
+					</div>
+				</div>
+			</div><!-- // .l -->
+			<div class="dc-main-ctnr-r">
+				<div class="dc-search">
+					<div class="search-box">
+						<b>编码/缩写/菜名</b>
+						<form id="dc-search" action="">
+							<input id="odr_home_keyWord" placeholder="模糊查询..." type="text">
+							<div class="my-btn">
+								<a id="odr_home_btn_search" href="#">搜索</a>
+							</div>
+						</form>
+					</div>
+					<div class="linShiC-eCP">
+						<div class="my-btn">
+							<a href="#">添加临时菜</a>
+						</div>
+						<div class="my-btn">
+							<a href="#">电子菜谱</a>
+						</div>
+
+					</div>
+				</div>
+				<div class="dc-leiBie-caiMing">
+					<div class="lb-continer">
+						<div class="lb">类别</div>
+						<div id="lb-detail-srcbar" class="lb-detail-box">
+							<div id="odr_home_dishtypelist"></div>
+						</div>
+					</div>
+					<div id="cm-continer-id" class="cm-continer">
+						<div class="lb">菜名</div>
+						<div class="cm-detail-box" id="cm-detail-box-id">
+							<!-- <div id="odr_home_dishlist"></div> -->
+						</div>
+					</div>
+				</div>
+			</div><!-- // .r -->
+		</div>
+		<div class="footer-info-c hidden-xs hidden-sm hidden-md">
+			<div class="wifi-time">营业时间：2016-04-11&nbsp;&nbsp;&nbsp;&nbsp;12:12:12</div>
+			<div class="warn-info">系统无法连接打印机，请确认！【详细】</div>
+		</div>
+	</div>
+	<!-- //点菜 -->
+	<!-- 点菜详情 -->
+	<div id="pil_ordrdetail_id" class="pil_ordrdetail modal mz fade">
+		<div class="dc-system-name">
+			<div class="l-logo">美食餐饮云系统 V1.0.1【点菜详情】</div>
+			<div class="r-close-btn-modal-dismiss" data-dismiss="modal"></div>
+		</div>
+		<div class="qd-dropdown-continer">
+			<div class="xiaoFeiHao">消费单号：JN12345678</div>
+			<div class="yuDingHao">预订单号：JN12345678</div>
+			<div class="taiWei">台位3号桌并到2号桌</div>
+			<div class="zhuangTai">状态：<i>已结账</i></div>
+		</div>
+		<div class="pil_ordrdetail_table">
+			<div class="tab-box">
+				<table>
+					<tr>
+						<th class="td1">　　　</th>
+						<th class="td2">编码</th>
+						<th class="tal">菜品</th>
+						<th class="tal">点菜员</th>
+						<th>点菜时间</th>
+						<th class="tal">特殊要求</th>
+						<th>数量</th>
+						<th class="tar">单价（折前）</th>
+						<th>折扣</th>
+						<th class="tar">单价（折后）</th>
+						<th>赠菜数量</th>
+						<th>赠菜金额</th>
+						<th>退菜数量</th>
+						<th>退菜金额</th>
+						<th>退菜理由</th>
+						<th class="tal">收银员</th>
+						<th>收银时间</th>
+						<th class="tal">划菜员</th>
+						<th>划菜时间</th>
+					</tr>
+					<tr>
+						<td class="td1">1</td>
+						<td class="td2">001</td>
+						<td class="tal">西红柿炒鸡蛋</td>
+						<td class="tal">张三</td>
+						<td>04-23 11:23</td>
+						<td class="tal">鸡蛋多一点</td>
+						<td>1份</td>
+						<td class="tar">￥15.00</td>
+						<td>8.0</td>
+						<td class="tar">￥12.00</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td class="tal">张三</td>
+						<td>04-04 11:11</td>
+						<td class="tal">张三</td>
+						<td>04-04 11:11</td>
+					</tr>
+					<tr>
+						<td class="td1">1</td>
+						<td class="td2">001</td>
+						<td class="tal">西红柿炒鸡蛋</td>
+						<td class="tal">张三</td>
+						<td>04-23 11:23</td>
+						<td class="tal">鸡蛋多一点</td>
+						<td>1份</td>
+						<td class="tar">￥15.00</td>
+						<td>8.0</td>
+						<td class="tar">￥12.00</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td class="tal">张三</td>
+						<td>04-04 11:11</td>
+						<td class="tal">张三</td>
+						<td>04-04 11:11</td>
+					</tr>
+					<tr>
+						<td class="td1">1</td>
+						<td class="td2">001</td>
+						<td class="tal">西红柿炒鸡蛋</td>
+						<td class="tal">张三</td>
+						<td>04-23 11:23</td>
+						<td class="tal">鸡蛋多一点</td>
+						<td>1份</td>
+						<td class="tar">￥15.00</td>
+						<td>8.0</td>
+						<td class="tar">￥12.00</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td class="tal">张三</td>
+						<td>04-04 11:11</td>
+						<td class="tal">张三</td>
+						<td>04-04 11:11</td>
+					</tr>
+					<tr>
+						<td class="td1">1</td>
+						<td class="td2">001</td>
+						<td class="tal">西红柿炒鸡蛋</td>
+						<td class="tal">张三</td>
+						<td>04-23 11:23</td>
+						<td class="tal">鸡蛋多一点</td>
+						<td>1份</td>
+						<td class="tar">￥15.00</td>
+						<td class="tar">8.0</td>
+						<td class="tar">￥12.00</td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td class="tal">张三</td>
+						<td>04-04 11:11</td>
+						<td class="tal">张三</td>
+						<td>04-04 11:11</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div class="qd-three-total">
+			<i>消费金额</i><b>￥666.66</b>
+			<i>赠菜金额</i><b>￥666.66</b>
+			<i>退菜金额</i><b>￥666.66</b>
+		</div>
+		<div class="footer-info-c hidden-xs hidden-sm hidden-md">
+			<div class="wifi-time">营业时间：2016-04-11&nbsp;&nbsp;&nbsp;&nbsp;12:12:12</div>
+			<div class="warn-info">系统无法连接打印机，请确认！【详细】</div>
+		</div>
+	</div>
+	<!-- //点菜详情 -->
+	<!-- 套餐 -->
+	<div id="taoCan-modal-1" class="modal taoCan-continer fade" aria-hidden="true">
+		<div class="taoCan-content-box">
+			<div class="title">
+				<span>套餐</span>
+				<div class="r-close-btn-modal-dismiss" data-dismiss="modal"></div>
+			</div>
+			<div class="taoCan-content">
+				<div class="tc-leiBie">
+					<div class="line1">套餐类别</div>
+					<div class="line2-and-bottom"><ul>
+						<li class="td active"><a data-toggle="tab" href="#taoCan-tab-a">春季套餐</a></li>
+						<li class="td"><a data-toggle="tab" href="#taoCan-tab-b">冬季套餐</a></li>
+					</ul></div>
+				</div>
+				<div class="tc-mingCheng-jiaGe">
+					<div class="line1">
+						<div>套餐名称</div>
+						<div class="taoCan-price">套餐价</div>
+					</div>
+					<div id="taoCan-tab-a" class="multi-line2-and-bottom-box fade active in">
+						<div class="line2-and-bottom"><ul>
+							<li class="td active"><a data-toggle="tab" href="#taoCan-tab-a-1">一人套餐</a></li>
+							<li class="td"><a data-toggle="tab" href="#taoCan-tab-a-2">二人套餐</a></li>
+						</ul></div>
+						<div class="line2-and-bottom taoCan-price">
+							<div class="td">￥80.0</div>
+							<div class="td">￥130.0</div>
+						</div>
+					</div>
+					<div id="taoCan-tab-b" class="multi-line2-and-bottom-box fade">
+						<div class="line2-and-bottom"><ul>
+							<li class="td active"><a data-toggle="tab" href="#taoCan-tab-b-1">三人套餐</a></li>
+							<li class="td"><a data-toggle="tab" href="#taoCan-tab-b-2">四人套餐</a></li>
+						</ul></div>
+						<div class="line2-and-bottom taoCan-price">
+							<div class="td">￥80.0</div>
+							<div class="td">￥130.0</div>
+						</div>
+					</div>
+
+				</div>
+				<div class="tc-caiPin">
+					<div class="line1">
+						<div class="tc-justify-percent-column1 leftspace">菜品名称</div>
+						<div class="tc-justify-percent-column2">数量</div>
+						<div class="tc-justify-percent-column3">单位</div>
+						<div class="tc-justify-percent-column4">是否位菜</div>
+						<div class="tc-justify-percent-column5">类别</div>
+						<div class="tc-justify-percent-column6">换菜</div>
+					</div>
+					<div id="taoCan-tab-a-1" class="multi-line2-and-bottom-box fade active in">
+						<div class="line2-and-bottom tc-justify-percent-column1">
+							<div class="td">酸辣土豆丝酸辣土豆丝</div>
+							<div class="td">酸辣土豆丝</div>
+						</div>
+						<div class="line2-and-bottom tc-justify-percent-column2">
+							<div class="td">1</div>
+							<div class="td">2</div>
+						</div>
+						<div class="line2-and-bottom tc-justify-percent-column3">
+							<div class="td">份</div>
+							<div class="td">个</div>
+						</div>
+						<div class="line2-and-bottom tc-justify-percent-column4">
+							<div class="td">是</div>
+							<div class="td">否</div>
+						</div>
+						<div class="line2-and-bottom tc-justify-percent-column5">
+							<div class="td">主菜</div>
+							<div class="td">备菜</div>
+						</div>
+						<div class="line2-and-bottom tc-justify-percent-column6">
+							<div class="td"><label class="tc-huanCai-checkbox my-checkbox" for="tc-huanCai-checked"><ul><li class="checkmark"><input checked="checked" id="tc-huanCai-checked" type="checkbox"></label></li></ul></div>
+							<div class="td"><label class="tc-huanCai-checkbox my-checkbox" for="tc-huanCai-notchecked"><ul><li class=""><input id="tc-huanCai-notchecked" type="checkbox"></li></ul></label></div>
+						</div>
+					</div>
+					<div id="taoCan-tab-a-2" class="multi-line2-and-bottom-box fade">
+						<div class="line2-and-bottom tc-justify-percent-column1">
+							<div class="td">酸辣白菜</div>
+							<div class="td">酸辣白菜酸辣白菜</div>
+						</div>
+						<div class="line2-and-bottom tc-justify-percent-column2">
+							<div class="td">1</div>
+							<div class="td">2</div>
+						</div>
+						<div class="line2-and-bottom tc-justify-percent-column3">
+							<div class="td">份</div>
+							<div class="td">个</div>
+						</div>
+						<div class="line2-and-bottom tc-justify-percent-column4">
+							<div class="td">是</div>
+							<div class="td">否</div>
+						</div>
+						<div class="line2-and-bottom tc-justify-percent-column5">
+							<div class="td">主菜</div>
+							<div class="td">备菜</div>
+						</div>
+						<div class="line2-and-bottom tc-justify-percent-column6">
+							<div class="td"><label class="tc-huanCai-checkbox my-checkbox" for="tc-huanCai-checked"><ul><li class="checkmark"><input checked="checked" id="tc-huanCai-checked" type="checkbox"></label></li></ul></div>
+							<div class="td"><label class="tc-huanCai-checkbox my-checkbox" for="tc-huanCai-notchecked"><ul><li class=""><input id="tc-huanCai-notchecked" type="checkbox"></li></ul></label></div>
+						</div>
+					</div>
+					<div id="taoCan-tab-b-1" class="multi-line2-and-bottom-box fade">
+						<div class="line2-and-bottom tc-justify-percent-column1">
+							<div class="td">酸辣白菜2</div>
+							<div class="td">酸辣白菜酸辣白菜</div>
+						</div>
+						<div class="line2-and-bottom tc-justify-percent-column2">
+							<div class="td">1</div>
+							<div class="td">2</div>
+						</div>
+						<div class="line2-and-bottom tc-justify-percent-column3">
+							<div class="td">份</div>
+							<div class="td">个</div>
+						</div>
+						<div class="line2-and-bottom tc-justify-percent-column4">
+							<div class="td">是</div>
+							<div class="td">否</div>
+						</div>
+						<div class="line2-and-bottom tc-justify-percent-column5">
+							<div class="td">主菜</div>
+							<div class="td">备菜</div>
+						</div>
+						<div class="line2-and-bottom tc-justify-percent-column6">
+							<div class="td"><label class="tc-huanCai-checkbox my-checkbox" for="tc-huanCai-checked"><ul><li class="checkmark"><input checked="checked" id="tc-huanCai-checked" type="checkbox"></label></li></ul></div>
+							<div class="td"><label class="tc-huanCai-checkbox my-checkbox" for="tc-huanCai-notchecked"><ul><li class=""><input id="tc-huanCai-notchecked" type="checkbox"></li></ul></label></div>
+						</div>
+					</div>
+					<div id="taoCan-tab-b-2" class="multi-line2-and-bottom-box fade">
+						<div class="line2-and-bottom tc-justify-percent-column1">
+							<div class="td">酸辣白菜a</div>
+							<div class="td">酸辣白菜酸辣白菜</div>
+						</div>
+						<div class="line2-and-bottom tc-justify-percent-column2">
+							<div class="td">1</div>
+							<div class="td">2</div>
+						</div>
+						<div class="line2-and-bottom tc-justify-percent-column3">
+							<div class="td">份</div>
+							<div class="td">个</div>
+						</div>
+						<div class="line2-and-bottom tc-justify-percent-column4">
+							<div class="td">是</div>
+							<div class="td">否</div>
+						</div>
+						<div class="line2-and-bottom tc-justify-percent-column5">
+							<div class="td">主菜</div>
+							<div class="td">备菜</div>
+						</div>
+						<div class="line2-and-bottom tc-justify-percent-column6">
+							<div class="td"><label class="tc-huanCai-checkbox my-checkbox" for="tc-huanCai-checked"><ul><li class="checkmark"><input checked="checked" id="tc-huanCai-checked" type="checkbox"></label></li></ul></div>
+							<div class="td"><label class="tc-huanCai-checkbox my-checkbox" for="tc-huanCai-notchecked"><ul><li class=""><input id="tc-huanCai-notchecked" type="checkbox"></li></ul></label></div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+			<div class="taoCan-bottom-btn">
+				<div class="my-btn">
+					<a data-dismiss="modal" href="#">取消</a>
+				</div>
+				<div class="my-btn">
+					<a href="#">确定</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- //套餐 -->
+	<!-- 结账 -->
+	<div id="pay_home_id" class="pay_home modal mz fade" aria-hidden="true">
+		<div class="dc-system-name">
+			<div class="l-logo">美食餐饮云系统 V1.0.1【结账】</div>
+			<div class="r-close-btn-modal-dismiss" data-dismiss="modal"></div>
+		</div>
+		<div class="pay_home_main">
+			<div class="p-h-left">
+				<div class="dc-zhuoHao-danHao">
+					<div class="yiDianCai">已点菜</div>
+					<div class="h">桌号</div>
+					<div class="t">
+						<div class="dropdown my-dropdown">
+							<a data-toggle="dropdown" href="#">霸王厅</a>
+							<ul class="dropdown-menu fade" role="menu" aria-labelledby="dLabel">
+								<li><a href="#">霸王厅</a></li>
+								<li><a href="#">虞姬厅</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="h">单号</div>
+					<div class="t">
+						<div class="dropdown my-dropdown">
+							<a data-toggle="dropdown" href="#">JN123456</a>
+							<!-- <ul class="dropdown-menu fade" role="menu" aria-labelledby="dLabel">
+								<li><a href="#">霸王厅</a></li>
+								<li><a href="#">虞姬厅</a></li>
+							</ul> -->
+						</div>
+					</div>
+					<div class="my-btn hidden-xs hidden-sm hidden-md">
+						<a href="#">刷新</a>
+					</div>
+				</div>
+				<div class="pay_home_yiDianCai_table">
+					<table>
+						<tbody><tr>
+							<th class="td1">
+								<label class="tc-huanCai-checkbox my-checkbox" for="p-h-all">
+									<ul><li class="checkmark">
+										<input checked="checked" id="p-h-all" type="checkbox">
+									</li></ul>
+								</label>
+							</th>
+							<th class="td2"></th>
+							<th class="td3">编码</th>
+							<th class="tal">菜品</th>
+							<th>类别</th>
+							<th>数量</th>
+							<th class="tar">单价</th>
+							<th class="tar">折前</th>
+							<th>折扣</th>
+							<th class="tar">折后</th>
+						</tr>
+						<tr>
+							<td class="td1">
+								<label class="tc-huanCai-checkbox my-checkbox">
+									<ul><li class="checkmark">
+										<input checked="checked" id="p-h-ipt2" type="checkbox">
+									</li></ul>
+								</label>
+							</td>
+							<td class="td2">【临】</td>
+							<td class="td3">001</td>
+							<td class="tal">西红柿炒鸡蛋</td>
+							<td>热菜</td>
+							<td>1份</td>
+							<td class="tar">￥15.00</td>
+							<td class="tar">￥18.00</td>
+							<td>8.0</td>
+							<td class="tar">￥18.00</td>
+						</tr>
+						<tr>
+							<td class="td1">
+								<label class="tc-huanCai-checkbox my-checkbox">
+									<ul><li class="checkmark">
+										<input checked="checked" id="p-h-ipt3" type="checkbox">
+									</li></ul>
+								</label>
+							</td>
+							<td class="td2"><i data-toggle="modal" data-target="#taoCan-modal-1">套餐</i></td>
+							<td class="td3">001</td>
+							<td class="tal">西红柿炒鸡蛋</td>
+							<td>热菜</td>
+							<td>1份</td>
+							<td class="tar">￥15.00</td>
+							<td class="tar">￥18.00</td>
+							<td>8.0</td>
+							<td class="tar">￥18.00</td>
+						</tr>
+						<tr class="tui">
+							<td class="td1">
+								<label class="tc-huanCai-checkbox my-checkbox">
+									<ul><li class="checkmark">
+										<input checked="checked" id="p-h-ipt4" type="checkbox">
+									</li></ul>
+								</label>
+							</td>
+							<td class="td2">【退】</td>
+							<td class="td3">001</td>
+							<td class="tal">西红柿炒鸡蛋</td>
+							<td>热菜</td>
+							<td>1份</td>
+							<td class="tar">￥15.00</td>
+							<td class="tar">￥18.00</td>
+							<td>8.0</td>
+							<td class="tar">￥18.00</td>
+						</tr>
+					</tbody></table>
+				</div>
+			</div>
+			<div class="p-h-right">
+				<div class="dc-zhuoHao-danHao">
+					<div class="jieZhang hidden-xs hidden-sm hidden-md">结账</div>
+					<div class="XM-DH"><i>姓名</i>张三<i>电话</i>13354875487</div>
+					<div class="my-btn">
+						<a href="#">顾客登记</a>
+					</div>
+				</div>
+				<div class="huiYuanKa"><form action="">
+					<div class="k">会员卡</div>
+					<div class="num"><input placeholder="卡号/电话号" type="text"><span class="clear-input-val cc">×</span><b class="hidden-xs hidden-sm hidden-md"></b></div>
+					<div class="psw"><input placeholder="密码" type="password"><span class="clear-input-val cc">×</span><b class="hidden-xs hidden-sm hidden-md"></b></div>
+					<div class="c"><i>储值卡</i>12345678</div>
+					<div class="c"><i>余额</i>2356</div>
+					<div class="c"><i>折扣</i>8.0</div>
+					<div class="my-btn">
+						<a href="#">确定</a>
+					</div></form>
+				</div>
+				<div class="huiYuanKa DZ-JM-btn">
+					<div class="my-btn">
+						<a href="#">打折</a>
+					</div>
+					<div class="my-btn">
+						<a href="#">减免</a>
+					</div>
+				</div>
+				
+				<div id="jiZhang-white-bg" class="jiZhang-white-bg">
+				<div class="jieZhang-money-table">
+					<div class="qd-all-about-money-3remark">
+                    	<div class="qd-all-a-m">
+                    		<table>
+                    			<tr>
+                    				<td class="jz-tab-p1">合计消费</td>
+                    				<td class="jz-tab-p2"><i>￥211.22</i></td>
+                    				<td class="jz-tab-p3"></td>
+                    			</tr>
+                    			<tr>
+                    				<td colspan="3"><div class="dashed"></div></td>
+                    			</tr>
+                    			<tr>
+                    				<td>会员折扣</td>
+                    				<td>-￥31.33</td>
+                    				<td></td>
+                    			</tr>
+                    			<tr>
+                    				<td>菜品折扣</td>
+                    				<td>-￥3.33</td>
+                    				<td></td>
+                    			</tr>
+                    			<tr>
+                    				<td>整单减免</td>
+                    				<td></td>
+                    				<td></td>
+                    			</tr>
+                    			<tr>
+                    				<td>服务费</td>
+                    				<td>+6.66</td>
+                    				<td></td>
+                    			</tr>
+                    			<tr>
+                    				<td>房间费</td>
+                    				<td>+￥2.22</td>
+                    				<td></td>
+                    			</tr>
+                    			<tr>
+                    				<td class="zml">抹零金额<b>再抹零</b></td>
+                    				<td>-￥9.66</td>
+                    				<td></td>
+                    			</tr>
+                    			<tr>
+                    				<td>已付金额</td>
+                    				<td>-￥0.00</td>
+                    				<td class="tal">（预订押金）</td>
+                    			</tr>
+                    			<tr>
+                    				<td>退菜金额</td>
+                    				<td>-￥0.00</td>
+                    				<td></td>
+                    			</tr>
+                    			<tr>
+                    				<td colspan="3"><div class="dashed"></div></td>
+                    			</tr>
+                    			<tr>
+                    				<td>应收金额</td>
+                    				<td><i>￥166.33</i></td>
+                    				<td></td>
+                    			</tr>
+                    			<tr>
+                    				<td colspan="3"><div class="solid"></div></td>
+                    			</tr>
+                    		<tr class="fuKuanFangShi tac">
+	                    				<td colspan="3">
+											<label class="my-radio" for="zhiFu-method-cash">
+												<ul><li class="radio-checked">
+													<input checked="checked" id="zhiFu-method-cash" name="zhiFu-method" type="radio">
+
+												</li></ul>现金支付
+											</label>
+											<label class="my-radio" for="zhiFu-method-c">
+												<ul><li>
+													<input id="zhiFu-method-c" name="zhiFu-method" type="radio">
+
+												</li></ul>银行卡支付
+											</label>
+											<label class="my-radio" for="zhiFu-method-a">
+												<ul><li>
+													<input id="zhiFu-method-a" name="zhiFu-method" type="radio">
+
+												</li></ul>支付宝支付
+											</label>
+											<span><a data-toggle="modal" href="#pay_otherpay_id" href="#">其他方式</a></span>
+	                    				</td>
+	                    			</tr>
+									<tr class="s">
+	                    				<td class="jz-tab-p1">实付</td>
+	                    				<td class="jz-tab-p2 w"><input type="text"></td>
+	                    				<td class="jz-tab-p3 tal"><b></b></td>
+	                    			</tr>
+	                    			<tr class="s">
+	                    				<td>找零</td>
+	                    				<td class="b"><i>￥20.00</i></td>
+	                    				<td>　</td>
+	                    			</tr>
+	                    			<tr>
+	                    				<td class="tal" colspan="3">
+												<label class="my-checkbox2" for="jieZhangPrintFaPiao"><ul class="my-checkbox2-box"><li class="my-checkbox2-mark">
+													<input type="checkbox" id="jieZhangPrintFaPiao" checked="checked">
+												</li></ul>结账同时打印发票联</label>
+	                    				</td>
+	                    			</tr>
+	                    			<tr class="s">
+	                    				<td>发票金额</td>
+	                    				<td><div class="w faPiao"><input type="text"></div></td>
+	                    				<td class="tal"><b></b></td>
+	                    			</tr>
+	                    		</table>
+	                    	</div>
+	                    </div>
+					</div>
+				</div>
+				<div class="jz-last-many-btn">
+					<div>
+						<div class="jd">
+							<div class="my-btn">
+								<a href="#">预结单</a>
+							</div>
+							<div class="my-btn">
+								<a href="#">结　单</a>
+							</div>
+						</div>
+						<div class="fq">
+							<div class="my-btn">
+								<a href="#">本单废弃</a>
+							</div>
+							<div class="my-btn">
+								<a href="#">挂账</a>
+							</div>
+							<div class="my-btn">
+								<a href="#">免　　单</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="footer-info-c">
+			<div class="wifi-time">营业时间：2016-04-11&nbsp;&nbsp;&nbsp;&nbsp;12:12:12</div>
+			<div class="warn-info">系统无法连接打印机，请确认！【详细】</div>
+		</div>
+	</div>
+	<!-- //结账 -->
+	<!-- 后厨补打 -->
+	<div id="bil_lateprint_id" class="modal taoCan-continer bil_lateprint fade" aria-hidden="true">
+		<div class="taoCan-content-box">
+			<div class="title">
+				<span>后厨补打</span>
+				<div class="r-close-btn-modal-dismiss" data-dismiss="modal"></div>
+			</div>
+			<div class="print-num-TW-ZT">
+				<span>消费单号：JN12345678</span>
+				<span>预订单号：12345678</span>
+				<span>台位：3号桌并至2号桌</span>
+				<span>状态：<i>已结账</i></span>
+			</div>
+			<div class="taoCan-content">
+				<div id="lateprint-table" class="tc-caiPin lateprint-table">
+					<table>
+						<tr>
+							<th>
+								<label class="colorful-checkbox" for="lateprint-checkbox1">
+									<ul class="white-box">
+										<li class="check-mark white"><input id="lateprint-checkbox1" checked="checked" type="checkbox"></li>
+									</ul>
+								</label>
+							</th>
+							<th>　　</th>
+							<th>编码</th>
+							<th class="tal">菜名</th>
+							<th class="tal">特殊要求</th>
+							<th>数量</th>
+							<th class="tar">单价（折前）</th>
+							<th>折扣</th>
+							<th class="tar">单价（折后）</th>
+						</tr>
+						<tr>
+							<td>
+								<label class="colorful-checkbox" for="lateprint-checkbox2">
+									<ul class="ju-box">
+										<li class="check-mark ju"><input id="lateprint-checkbox2" checked="checked" type="checkbox"></li>
+									</ul>
+								</label>
+							</td>
+							<td>1</td>
+							<td>0001</td>
+							<td class="tal">西红柿炒鸡蛋</td>
+							<td class="tal">多放鸡蛋</td>
+							<td>1份</td>
+							<td class="tar">￥15.00</td>
+							<td>8.0</td>
+							<td class="tar">12.00</td>
+						</tr>
+						<tr>
+							<td>
+								<label class="colorful-checkbox" for="lateprint-checkbox3">
+									<ul class="ju-box">
+										<li class="check-mark ju"><input id="lateprint-checkbox3" checked="checked" type="checkbox"></li>
+									</ul>
+								</label>
+							</td>
+							<td>1</td>
+							<td>0001</td>
+							<td class="tal">西红柿炒鸡蛋</td>
+							<td class="tal">多放鸡蛋</td>
+							<td>1份</td>
+							<td class="tar">￥15.00</td>
+							<td>8.0</td>
+							<td class="tar">12.00</td>
+						</tr>
+
+					</table>
+
+				</div>
+			</div>
+			<div class="taoCan-bottom-btn pil_lateprint_b_btn">
+				<div class="dropdown my-dropdown dropup">
+					<a data-toggle="dropdown" href="#">理由一</a>
+					<ul class="dropdown-menu fade" role="menu" aria-labelledby="dLabel">
+						<li><a href="#">理由一</a></li>
+						<li><a href="#">理由二</a></li>
+					</ul>
+				</div>
+				<div class="my-btn">
+					<a href="#">后厨补打</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- //后厨补打 -->
+	<!-- 反结账 -->
+	<div id="bil_reversepay_id" class="modal taoCan-continer bil_reversepay fade" aria-hidden="true">
+		<div class="taoCan-content-box">
+			<div class="title">
+				<span>反结账</span>
+				<div class="r-close-btn-modal-dismiss" data-dismiss="modal"></div>
+			</div>
+			<div class="taoCan-content reverse-pay-content">
+				<div class="reason">反结账原因
+					<div class="dropdown my-dropdown">
+						<a data-toggle="dropdown" href="#">理由一</a>
+						<ul class="dropdown-menu fade" role="menu" aria-labelledby="dLabel">
+							<li><a href="#">理由一</a></li>
+							<li><a href="#">理由二</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="people">授权人
+					<div class="dropdown my-dropdown">
+						<a data-toggle="dropdown" href="#">001-权权人</a>
+						<ul class="dropdown-menu fade" role="menu" aria-labelledby="dLabel">
+							<li><a href="#">001-授权一</a></li>
+							<li><a href="#">002-授权二</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="psw">
+					密码<input type="password">
+				</div>
+			</div>
+			<div class="taoCan-bottom-btn">
+				<div class="my-btn">
+					<a data-dismiss="modal" href="#">取消</a>
+				</div>
+				<div class="my-btn">
+					<a href="#">确定</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- //反结账 -->
+	<!-- 开台（选择台位） -->
+	<div id="tbl_choice_id" class="modal mz taoCan-continer tbl_choice fade" aria-hidden="true">
+		<div class="taoCan-content-box">
+			<div class="title">
+				<span>开台</span>
+				<div class="r-close-btn-modal-dismiss" data-dismiss="modal"></div>
+			</div>
+			<div class="tbl-choice-area-num-name">
+				<input type="hidden" id="tbl_choice_areaId">
+				<div class="dropdown my-dropdown">
+					<a data-toggle="dropdown" href="#">全部区域</a>
+					<ul class="dropdown-menu fade" role="menu" aria-labelledby="dLabel" id="tbl_choice_arealist">
+					</ul>
+				</div>
+				<div class="tbl-c-num-name">
+					台位号/名称
+					<input id="tbl_choice_keyWord" type="text" placeholder="输入关键字"><span class="clear-input-val cc">×</span>
+					<div class="my-btn">
+						<a id="tbl_choice_btn_search" href="#">搜索</a>
+					</div>
+				</div>
+				<div class="tbl-c-YD-time">
+				</div>
+			</div>
+			<div id="tbl_choice-content_id" class="tbl_choice-content">
+				<div id="tbl_choice_dining"></div>
+			</div>
+			<div class="taoCan-bottom-btn">
+				<div class="my-btn">
+					<a data-dismiss="modal" href="#">取　消</a>
+				</div>
+				<div class="my-btn">
+					<a id="tbl_choice_btn_qd" href="#">确　定</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- //开台（选择台位） -->
+	<!-- 交班历史记录 -->
+	<div id="sft_history_id" class="modal taoCan-continer sft_history fade mz">
+		<div class="taoCan-content-box">
+			<div class="title">
+				<span>交班历史记录</span>
+				<div class="r-close-btn-modal-dismiss" data-dismiss="modal"></div>
+			</div>
+			<div class="sft_history-top-dd">
+				<div class="dd-l1">
+					<div class="tz">
+						消费期间<input type="text" id="datepicker3">
+						至<input type="text" id="datepicker4">
+					</div>
+					<div class="JBR">
+						交班人
+						<div class="dropdown my-dropdown">
+							<a data-toggle="dropdown" href="#">全部</a>
+							<ul class="dropdown-menu fade" role="menu" aria-labelledby="dLabel">
+								<li><a href="#">人人一</a></li>
+								<li><a href="#">人人二</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="dd-l2">
+					<div class="SYT">
+						　收银台
+						<div class="dropdown my-dropdown">
+							<a data-toggle="dropdown" href="#">全部</a>
+							<ul class="dropdown-menu fade" role="menu" aria-labelledby="dLabel">
+								<li><a href="#">收银台一</a></li>
+								<li><a href="#">收银台二</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="my-btn">
+						<a data-toggle="modal" data-target="#sft_history_id" href="#">查　询</a>
+					</div>
+				</div>
+			</div>
+			<div id="sft_history-table-continer_id" class="sft_history-table-continer trClickChangeColor">
+				<table>
+					<tr>
+						<th>　　</th>
+						<th>收银台</th>
+						<th>营业时间</th>
+						<th>交班时间</th>
+						<th>前班交班</th>
+						<th>本班收款</th>
+						<th>会员充值</th>
+						<th>会员退卡退款</th>
+						<th>预订押金</th>
+						<th>当班营业款</th>
+						<th>上缴营业款</th>
+						<th>下放营业款</th>
+						<th>交接金额</th>
+						<th>交班人</th>
+						<th>接班人</th>
+					</tr>
+					<tr>
+						<td class="tab-tac">1</td>
+						<td class="tab-tac">02 2楼收银台</td>
+						<td class="tab-tac">2016-16-16</td>
+						<td class="tab-tac">11:11:11</td>
+						<td>100.00</td>
+						<td>1000.00</td>
+						<td>300.00</td>
+						<td>-120.00</td>
+						<td>100.00</td>
+						<td>13300.00</td>
+						<td>13300.00</td>
+						<td>300.00</td>
+						<td>300.00</td>
+						<td class="tab-tal">01 张三三</td>
+						<td class="tab-tal">02 李四四</td>
+					</tr>
+					<tr>
+						<td class="tab-tac">2</td>
+						<td class="tab-tac">02 2楼收银台</td>
+						<td class="tab-tac">2016-16-16</td>
+						<td class="tab-tac">11:11:11</td>
+						<td>100.00</td>
+						<td>1000.00</td>
+						<td>300.00</td>
+						<td>-120.00</td>
+						<td>100.00</td>
+						<td>13300.00</td>
+						<td>13300.00</td>
+						<td>300.00</td>
+						<td>300.00</td>
+						<td class="tab-tal">01 张三三</td>
+						<td class="tab-tal">02 李四四</td>
+					</tr>
+					<tr class="last">
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+				</table>
+			</div>
+			<div class="sft_history-close-btn">
+				<div class="my-btn">
+					<a data-dismiss="modal" href="#">关　闭</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- //交班历史记录 -->
+	<!-- 交班对账单 -->
+	<div id="sft_check_id" class="modal taoCan-continer sft_check fade mz">
+		<div class="taoCan-content-box">
+			<div class="title">
+				<span>交班对账单</span>
+				<div class="r-close-btn-modal-dismiss" data-dismiss="modal"></div>
+			</div>
+			<div class="sft_check-top-info">
+				<span>营业日期</span>2016-02-02
+				<span>交班人</span>张三三
+				<span>收银台</span>02
+				<span>班次</span>中餐
+				<br><span>当班时间</span>2016-02-02 12:12:12 至 2016-03-03 13:13:13
+			</div>
+			<div class="sft_check-tab-continer">
+				<ul>
+					<li class="active"><a data-toggle="tab" href="#sft-c-jz">结账情况</a></li>
+					<li><a data-toggle="tab" href="#sft-c-cp">菜品消费</a></li>
+					<li><a data-toggle="tab" href="#sft-c-sp">商品消费</a></li>
+					<li><a data-toggle="tab" href="#sft-c-mx">收款明细</a></li>
+					<li><a data-toggle="tab" href="#sft-c-cz">会员储值</a></li>
+				</ul>
+				<div id="sft_check-tab-main"  class="tab-content sft_check-tab-main">
+					<div class="sft-c-jz tab-pane fade in active" id="sft-c-jz">
+						<div class="sft_check-1-tab">
+							<table>
+								<tr>
+									<td>前班交接</td>
+									<td>100.00</td>
+								</tr>
+								<tr>
+									<td>消费总额</td>
+									<td>1234.00</td>
+								</tr>
+								<tr>
+									<td>实收总额</td>
+									<td>2222.00</td>
+								</tr>
+								<tr>
+									<td>消费单数</td>
+									<td>111</td>
+								</tr>
+								<tr>
+									<td>单均消费</td>
+									<td>111</td>
+								</tr>
+								<tr>
+									<td>消费人数</td>
+									<td>221</td>
+								</tr>
+								<tr>
+									<td>人均消费</td>
+									<td>22.00</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+					<div class="tab-pane fade" id="sft-c-cp">
+						<div class="sft_check-1-tab">
+							<table>
+								<tr>
+									<td>凉菜凉菜</td>
+									<td>123.12</td>
+								</tr>
+								<tr>
+									<td>热菜</td>
+									<td>23.02</td>
+								</tr>
+							</table>
+						</div>
+						<div class="sft_check-tab-one-HJ">
+							<i>合计</i>12345.22
+						</div>
+					</div>
+					<div class="tab-pane fade" id="sft-c-sp">
+						<div class="sft_check-1-tab">
+							<table>
+								<tr>
+									<td>酒酒</td>
+									<td>123.12</td>
+								</tr>
+								<tr>
+									<td>水水水水</td>
+									<td>33.33</td>
+								</tr><tr>
+									<td>酒酒</td>
+									<td>123.12</td>
+								</tr>
+								<tr>
+									<td>水水水水</td>
+									<td>33.33</td>
+								</tr><tr>
+									<td>酒酒</td>
+									<td>123.12</td>
+								</tr>
+								<tr>
+									<td>水水水水</td>
+									<td>33.33</td>
+								</tr><tr>
+									<td>酒酒</td>
+									<td>123.12</td>
+								</tr>
+								<tr>
+									<td>水水水水</td>
+									<td>33.33</td>
+								</tr><tr>
+									<td>酒酒</td>
+									<td>123.12</td>
+								</tr>
+								<tr>
+									<td>水水水水</td>
+									<td>33.33</td>
+								</tr><tr>
+									<td>酒酒</td>
+									<td>123.12</td>
+								</tr>
+								<tr>
+									<td>水水水水</td>
+									<td>33.33</td>
+								</tr><tr>
+									<td>酒酒</td>
+									<td>123.12</td>
+								</tr>
+								<tr>
+									<td>水水水水</td>
+									<td>33.33</td>
+								</tr><tr>
+									<td>酒酒</td>
+									<td>123.12</td>
+								</tr>
+								<tr>
+									<td>水水水水</td>
+									<td>33.33</td>
+								</tr><tr>
+									<td>酒酒</td>
+									<td>123.12</td>
+								</tr>
+								<tr>
+									<td>水水水水</td>
+									<td>33.33</td>
+								</tr>
+							</table>
+						</div>
+						<div class="sft_check-tab-one-HJ">
+							<i>合计</i>12345.33
+						</div>
+					</div>
+					<div class="tab-pane fade" id="sft-c-mx">
+						<div class="sft_check-1-tab">
+							<table>
+								<tr>
+									<td>现金</td>
+									<td>33.33</td>
+								</tr>
+								<tr>
+									<td>银行卡</td>
+									<td>2222.22</td>
+								</tr>
+								<tr>
+									<td>支付宝</td>
+									<td>333.00</td>
+								</tr>
+							</table>
+						</div>
+						<div class="sft_check-tab-one-HJ">
+							<i>合计</i>12345.44
+						</div>
+					</div>
+					<div class="tab-pane fade" id="sft-c-cz">
+						<div class="sft_check-1-tab">
+							<table>
+								<tr>
+									<td>储值金额</td>
+									<td>1231.00</td>
+								</tr><tr>
+									<td>消费金额</td>
+									<td>131.00</td>
+								</tr>
+							</table>
+						</div>
+						<div class="sft_check-tab-one-HJ">
+							<i>合计</i>12345.22
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="sft_check-bottom-btn">
+				<div class="my-btn">
+					<a data-dismiss="modal" href="#">取　消</a>
+				</div>
+				<div class="my-btn">
+					<a href="#">打　印</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- //交班对账单 -->
+	<!-- 预订 -->
+	<div id="pre_home_id" class="modal taoCan-continer pre_home fade mz">
+		<div class="taoCan-content-box">
+			<div class="title">
+				<span>预订</span>
+				<div class="r-close-btn-modal-dismiss" data-dismiss="modal"></div>
+			</div>
+			<div class="pre_home-num">预订单号 YD12345678</div>
+			<div class="pre_home-tab-box">
+				<div class="sft_check-tab-continer">
+					<ul>
+						<li class="active"><a data-toggle="tab" href="#pre-h-tab-JB">基本信息</a></li>
+						<li><a data-toggle="tab" href="#pre-h-tab-TW">预订台位</a></li>
+						<li><a data-toggle="tab" href="#pre-h-tab-CP">预订菜品</a></li>
+					</ul>
+					<div class="tab-content sft_check-tab-main">
+						<div class="pre-h-tab-JB tab-pane fade in active" id="pre-h-tab-JB">
+							<div class="pre_home-1-tab">
+								<table>
+									<tr class="pre_home-1-t-t-tr">
+										<td colspan="4">
+											<div class="pre_home-1-t-t">
+												联系人信息
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td class="td1">电话</td>
+										<td class="keybd td2"><input type="text"><span class="clear-input-val cc">×</span></td>
+										<td class="td3">会员单位</td>
+										<td class="keybd td4"><input type="text"><span class="clear-input-val cc">×</span></td>
+									</tr>
+									<tr>
+										<td class="td1">联系人</td>
+										<td class="keybd td2"><input type="text"><span class="clear-input-val cc">×</span></td>
+										<td class="td3">性别</td>
+										<td class="td4">
+											<label class="my-radio" for="pre_home-1-tab-sex1">
+												<ul>
+													<li><input id="pre_home-1-tab-sex1" name="pre_home-1-tab-sex" type="radio"></li>
+												</ul>男
+											</label>
+											<label class="my-radio" for="pre_home-1-tab-sex2">
+												<ul>
+													<li><input id="pre_home-1-tab-sex2" name="pre_home-1-tab-sex" type="radio"></li>
+												</ul>女
+											</label>
+										</td>
+									</tr>
+									<tr class="pre_home-1-t-t-tr">
+										<td colspan="4">
+											<div class="pre_home-1-t-t">
+												预订信息
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td class="td1">预抵时间</td>
+										<td class="td2 h-m-s-td">
+											<input id="pre-h-arrive-nianYueRi" placeholder="年/月/日" type="text">
+											<input id="pre-h-arrive-shiFen" placeholder="- - : - -" type="text" class="h-m-s">
+										</td>
+										<td class="td3">订金方式</td>
+										<td class="td4">
+											<div class="dropdown my-dropdown">
+												<a data-toggle="dropdown" href="#">现金</a>
+												<ul class="dropdown-menu fade" role="menu" aria-labelledby="dLabel">
+													<li><a href="#">刷卡</a></li>
+													<li><a href="#">支付宝</a></li>
+												</ul>
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td class="td1">最晚保留至</td>
+										<td class="td2 h-m-s-td">
+											<input id="pre-h-ZW-nianYueRi" placeholder="年/月/日" type="text">
+											<input id="pre-h-ZW-shiFen" placeholder="- - : - -" type="text" class="h-m-s">
+										</td>
+										<td class="td3">订金</td>
+										<td class="keybd td4"><input type="text"></td>
+									</tr>
+									<tr>
+										<td class="td1">人数</td>
+										<td class="keybd" colspan="3"><input type="text"></td>
+									</tr>
+									<tr>
+										<td class="td1">预订备注</td>
+										<td colspan="3"><textarea class="pre-h-tab-JB-textarea" name="" id="" cols="30" rows="10"></textarea></td>
+									</tr>
+									<tr>
+										<td class="td1">
+											<label class="my-checkbox2" for="pre-h-send-mesg">
+												<ul class="my-checkbox2-box">
+													<li class="my-checkbox2-mark">
+														<input type="checkbox" id="pre-h-send-mesg" checked="checked">
+													</li>
+												</ul>发送短信
+											</label>
+										</td>
+										<td colspan="3"><textarea id="pre-h-tab-JB-textarea-ena-disa" class="pre-h-tab-JB-textarea" name="" id="" cols="30" rows="10">尊敬的。。。</textarea></td>
+									</tr>
+								</table>
+							</div>
+						</div>
+						<div class="tab-pane fade" id="pre-h-tab-TW">
+							<div class="pre_home-1-tab">
+								<div class="pre-h-STWD">
+									<label class="my-checkbox2" for="pre-h-STWD-ipt">
+										<ul class="my-checkbox2-box">
+											<li class="my-checkbox2-mark">
+												<input type="checkbox" id="pre-h-STWD-ipt" checked="checked">
+											</li>
+										</ul>食堂外带（食堂外带的场合将不能预订台位）
+									</label>
+									<div class="my-btn">
+										<a href="#">添加</a>
+									</div>
+									<div class="my-btn">
+										<a href="#">删除</a>
+									</div>
+								</div>
+								<div id="" class="pre-h-tab-TW-tab trClickChangeColor">
+									<table>
+										<tr>
+											<th class="td1"> </th>
+											<th class="td2">区域</th>
+											<th class="td3">台位编号</th>
+											<th class="td4">台位名称</th>
+										</tr>
+									</table>
+									<div id="TW-tab-wrap" class="TW-tab-wrap">
+										<table>
+											<tr>
+												<td class="td1">1</td>
+												<td class="td2">大厅</td>
+												<td class="td3">001</td>
+												<td class="td4">香草厅</td>
+											</tr>
+											<tr>
+												<td class="td1">2</td>
+												<td class="td2">大厅</td>
+												<td class="td3">001</td>
+												<td class="td4">香草厅</td>
+											</tr>
+											<tr class="last">
+												<td class="td1"></td>
+												<td class="td2"></td>
+												<td class="td3"></td>
+												<td class="td4"></td>
+											</tr>
+										</table>
+									</div>
+								</div>
+								<div class="pre-h-CJBZ-ZJE">
+									菜金标准 <input type="text">
+									<label class="my-radio" for="pre-h-CJBZ-ren">
+										<ul>
+											<li class=""><input id="pre-h-CJBZ-ren" name="pre_home-1-tab-sex" type="radio"></li>
+										</ul>每人
+									</label>
+									<label class="my-radio" for="pre-h-CJBZ-rzhuo">
+										<ul>
+											<li class="radio-checked"><input id="pre-h-CJBZ-rzhuo" name="pre_home-1-tab-sex" type="radio"></li>
+										</ul>每桌
+									</label>
+									<br>总金额 <span>￥500.00</span>
+								</div>
+							</div>
+						</div>
+						<div class="tab-pane fade" id="pre-h-tab-CP">
+							<div class="pre_home-1-tab pre-h-TDCP-tab-wrap">
+								<div class="pre-h-STWD">
+									<div class="my-btn">
+										<a href="#">添加</a>
+									</div>
+									<div class="my-btn">
+										<a href="#">删除</a>
+									</div>
+								</div>
+								<div id="" class="pre-h-tab-TW-tab pre-h-TDCP-tab trClickChangeColor">
+									<table>
+										<tr>
+											<th class="td1">
+												<label class="colorful-checkbox" for="pre-h-YuDCP">
+													<ul class="white-box">
+														<li class="white check-mark"><input id="pre-h-YuDCP" checked="checked" type="checkbox"></li>
+													</ul>
+												</label>
+											</th>
+											<th class="td2">菜品</th>
+											<th class="td3">特殊要求</th>
+											<th class="td4">是否提前备菜</th>
+											<th class="td5">数量</th>
+											<th class="td6">单价</th>
+										</tr>
+									</table>
+									<div id="TW-tab-wrap" class="TW-tab-wrap">
+										<table>
+											<tr>
+												<td class="td1">
+													<label class="colorful-checkbox" for="pre-h-YuDCP2">
+														<ul class="ju-box">
+															<li class="ju check-mark"><input id="pre-h-YuDCP2" checked="checked" type="checkbox"></li>
+														</ul>
+													</label>
+												</td>
+												<td class="td2">西红柿炒鸡蛋</td>
+												<td class="td3">不放鸡蛋</td>
+												<td class="td4">是</td>
+												<td class="td5">一份</td>
+												<td class="td6">￥12.00</td>
+											</tr>
+											<tr>
+												<td class="td1">
+													<label class="colorful-checkbox" for="pre-h-YuDCP3">
+														<ul class="ju-box">
+															<li class="ju check-mark"><input id="pre-h-YuDCP3" checked="checked" type="checkbox"></li>
+														</ul>
+													</label>
+												</td>
+												<td class="td2">西红柿炒</td>
+												<td class="td3">不放鸡蛋蛋</td>
+												<td class="td4">否</td>
+												<td class="td5">一份</td>
+												<td class="td6">￥8.00</td>
+											</tr>
+
+											<tr class="last">
+												<td class="td1"></td>
+												<td class="td2"></td>
+												<td class="td3"></td>
+												<td class="td4"></td>
+												<td class="td5"></td>
+												<td class="td6"></td>
+											</tr>
+										</table>
+									</div>
+								</div>
+								<div class="pre-h-CJBZ-ZJE">
+									合计 <i>￥500.00</i>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="taoCan-bottom-btn">
+				<div class="my-btn">
+					<a data-dismiss="modal" href="#">取　消</a>
+				</div>
+				<div class="my-btn">
+					<a href="#">确　定</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- //预订 -->
+	<!-- 其它支付方式 -->
+	<div id="pay_otherpay_id" class="modal taoCan-continer pay_otherpay fade mz">
+		<div class="taoCan-content-box">
+			<div class="title">
+				<span>其它支付方式</span>
+				<div class="r-close-btn-modal-dismiss" data-dismiss="modal"></div>
+			</div>
+			<div class="pre_home-num">
+				<span><i>应收</i>231.11</span>
+				<span><i>已付</i>--</span>
+				<span><i>找零</i>--</span>
+				<span><i>差额</i>231.00</span>
+			</div>
+			<div class="pop-wrap">
+				<div class="pop-l">
+					<table id="pop-l-t">
+						<tr>
+							<td>付款方式</td>
+							<td>
+								<div id="pop-pay-mth" class="dropdown my-dropdown">
+									<a id="pop-FKFS" data-toggle="dropdown" href="#">请选择</a>
+									<ul class="dropdown-menu fade" role="menu" aria-labelledby="dLabel">
+										<li><a href="#">支付宝</a></li>
+										<li><a href="#">现金支付</a></li>
+										<li><a href="#">挂账</a></li>
+									</ul>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" class="pop-h-line"></td>
+						</tr>
+						<tr>
+							<td>付款</td>
+							<td><input id="pop-SK" type="text" placeholder="0.00"></td>
+						</tr>
+						<tr>
+							<td>找零</td>
+							<td><input id="pop-ZL" type="text" placeholder="0.00"></td>
+						</tr>
+						<tr class="pop-GZDW-GZR">
+							<td>挂账单位</td>
+							<td>
+								<div class="dropdown my-dropdown">
+									<a data-toggle="dropdown" href="#">请选择</a>
+									<ul class="dropdown-menu fade" role="menu" aria-labelledby="dLabel">
+										<li><a href="#">某单位一</a></li>
+										<li><a href="#">某单位二</a></li>
+									</ul>
+								</div>
+							</td>
+						</tr>
+						<tr class="pop-GZDW-GZR">
+							<td>挂账人</td>
+							<td><input type="text"></td>
+						</tr>
+						<tr>
+							<td colspan="2" class="pop-h-line"></td>
+						</tr>
+					</table>
+					<div class="pop-b-btn">
+						<div class="my-btn">
+							<a id="pop-addpay" href="#">付　款</a>
+						</div>
+						<div class="my-btn">
+							<a id="pop-delpay" href="#">删除付款</a>
+						</div>
+					</div>
+				</div>
+				<div class="pop-r trClickChangeColor">
+					<table id="pop-r-t">
+						<tr>
+							<th>付款方式</th>
+							<th>收款</th>
+							<th>找零</th>
+						</tr>
+						<tr class="pop-cash">
+							<td>现金支付</td>
+							<td>200.00</td>
+							<td>0.00</td>
+						</tr>
+						<tr class="">
+							<td>挂账</td>
+							<td>0.00</td>
+							<td>33.00</td>
+						</tr>
+						<tr class="last">
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class="pop-b-btn2">
+				<div class="my-btn">
+					<a id="pop-addpay" href="#">确　定</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- //其它支付方式 -->
+	<!-- 提示窗口 -->
+	<div id="reminder-modal" class="modal reminder-continer fade" aria-hidden="true">
+		<div class="taoCan-content-box">
+			<div class="title">
+				<div class="r-close-btn-modal-dismiss" data-dismiss="modal"></div>
+			</div>
+			<div class="taoCan-content">
+				<div class="kt-mingCheng tishi">
+					当前台位已被预订，是否开台？
+				</div>
+			</div>
+			<div class="kaiTai-bottom-btn">
+				<div class="my-btn-table">
+					<a data-dismiss="modal" href="#">取消</a>
+				</div>
+				<div class="my-btn-table">
+					<a id="tbl_open_btn_fydkt" data-dismiss="modal"  href="#" >非预订开台</a>
+				</div>
+				<div class="my-btn-table">
+					<a data-dismiss="modal" href="#">预订开台</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- //提示窗口 -->
+
+
+
+
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/jquery.mCustomScrollbar.min.js"></script>
+	<script src="js/jquery.datetimepicker.full.min.js"></script>
+	<script src="js/ctrl.min.js"></script>
+	<!-- <script src="js/bootstrap-datepicker.min.js"></script>
+	<script src="js/bootstrap-datepicker.zh-CN.min.js"></script>
+	<script src="js/ctrl.js"></script> -->
+	
+	<script src="js/common/const.js"></script>
+	<script src="js/common/common.js"></script>
+	<script src="js/Table/tbl_home.js"></script>
+	<script src="js/Table/tbl_union.js"></script>
+	<script src="js/Table/tbl_open.js"></script>
+	<script src="js/Table/tbl_home_btn.js"></script>
+	<script src="js/Table/tbl_choice.js"></script>
+	<script src="js/Order/odr_home.js"></script>
+	
+	
+	<script>
+	var winH = $(window).height();
+	$("#wrapper").height(winH);
+	$(window).resize(function(){
+		var winH2 = $(window).height();
+		$("#wrapper").height(winH2);
+	});
+	var t = null;
+	function time(){
+	 dt = new Date();
+	 
+	 var y=dt.getFullYear();
+	 var mon = dt.getMonth()+1;
+	 var r =dt.getDate(); 
+	 var h=dt.getHours();
+	 var m=dt.getMinutes();
+	 var s=dt.getSeconds();
+	 document.getElementById("timeShow").innerHTML="当前时间："+y+"年"+mon+"月"+r+"日"+"&nbsp;&nbsp;"+h+"时"+m+"分"+s+"秒";
+	 t = setTimeout(time,1000);    
+	} 
+	window.onload=function(){time()}
+
+
+	</script>
+</body>
+</html>

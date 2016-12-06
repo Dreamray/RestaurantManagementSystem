@@ -1,0 +1,283 @@
+@charset "utf-8";
+//KISSY CSS Reset
+//理念：清除和重置是紧密不可分的
+//特色：1.适应中文 2.基于最新主流浏览器
+//维护：玉伯(lifesinger@gmail.com), 正淳(ragecarrier@gmail.com)
+
+// 清除内外边距
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, // structural elements 结构元素
+dl, dt, dd, ul, ol, li, // list elements 列表元素
+pre, // text formatting elements 文本格式元素
+fieldset, lengend, button, input, textarea, // form elements 表单元素
+th, td { // table elements 表格元素
+    margin: 0;
+    padding: 0;
+}
+// 设置默认字体
+body,
+button, input, select, textarea { // for ie
+    font: 12px/1 "\5fae\8f6f\96c5\9ed1", "\5b8b\4f53", Tahoma, Helvetica, Arial, sans-serif; // 用ascii 支持任意编码 分别是宋体 微软雅黑
+}
+h1 { font-size: 18px; }// 18px / 12px = 1.5
+h2 { font-size: 16px; }
+h3 { font-size: 14px; }
+h4, h5, h6 { font-size: 100%; }
+address, cite, dfn, em, var, i { font-style: normal; } // 将斜体扶正
+code, kbd, pre, samp, tt { font-family: "Courier New", Courier, monospace; } // 统一等宽字体
+// small { font-size: 12px; } 小于 12px 的中文很难阅读，让 small 正常化
+b, strong {font-weight: normal; } // 取消加粗
+// 重置列表元素
+ul, ol { list-style: none; }
+// 重置文本格式元素
+a {
+    outline:none;
+    color: inherit; // a继承字体颜色后不用单独对a设置颜色 设置父元素即可
+}
+a:hover,a:visited,a:focus{
+	text-decoration: none;color: inherit;outline:none;
+}
+abbr[title], acronym[title] { // 注：1.ie6 不支持 abbr; 2.这里用了属性选择符，ie6 下无效果
+    border-bottom: 1px dotted;
+    cursor: help;
+}
+q:before, q:after { content: ''; }
+// 重置表单元素
+legend { color: #000; } // for ie6
+fieldset, img { border: none; } // img 搭车：让链接里的 img 无边框
+// 注：optgroup 无法扶正
+button, input, select, textarea { font-size: 100%; } // 使得表单元素在 ie 下能继承字体大小
+input:focus {
+    outline: none;
+}
+// 重置表格元素
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+// 重置 hr
+hr {
+    border: none;
+    height: 1px;
+}
+// 让非ie浏览器默认也显示垂直滚动条，防止因滚动条引起的闪烁
+// html { overflow-y: scroll; }
+
+// //滚动条样式
+::-webkit-scrollbar {//滚动条整体部分
+	// width: 12px;
+	display:none;
+}
+// ::-webkit-scrollbar-track{//内层轨道，滚动条中间部分
+// 	background-color: #rgba(255,255,255,.2);
+// 	border-style: none none none solid;
+//     border-width: 1px;
+//     border-color: transparent transparent transparent rgba(255, 255, 255, 0.2);
+
+// }
+
+// ::-webkit-scrollbar-thumb{//滚动条里面可以拖动的那个
+// 	background: #c2893a;
+
+// }
+
+
+// /* 定义垂直滚动条下边的按扭 */
+// ::-webkit-scrollbar-button:vertical:end:increment {
+// 	display: block;
+//     width: 12px;
+// 	height: 12px;
+//     background-image: url(../img/gdtBottom.png);
+//     background-size: 100% 100%;
+// }
+// /* 定义垂直滚动条上边的按扭 */
+// ::-webkit-scrollbar-button:vertical:start:decrement {
+// 	display: block;
+//     width: 12px;
+// 	height: 12px;
+//     background-image: url(../img/gdtTop.png);
+//     background-size: 100% 100%;
+// }
+// /* 定义水平滚动条上边的按钮 */
+// ::-webkit-scrollbar-button:horizontal:start:decrement {
+// 	display: block;
+//     width: 12px;
+// 	height: 12px;
+//     background-image: url(../img/gdtLeft.png);
+//     background-size: 100% 100%;
+// }
+// /* 定义水平滚动条下边的按扭 */
+// ::-webkit-scrollbar-button:horizontal:end:increment {
+// 	display: block;
+//     width: 12px;
+// 	height: 12px;
+//     background-image: url(../img/gdtRight.png);
+//     background-size: 100% 100%;
+// }
+
+
+
+
+
+
+//下拉菜单fadein
+.dropdown-menu.fade {
+  display: block;
+  opacity: 0;
+  pointer-events: none;
+}
+.open > .dropdown-menu.fade {
+  pointer-events: auto;
+  opacity: 1;
+}
+// .datepicker-dropdown.fade{
+//     display: block;
+//     opacity: 0;
+//     pointer-events: none;
+// }
+body .datepicker-dropdown{
+    pointer-events: auto;
+  opacity: 0;
+}
+
+
+// 清除浮动 start
+@mixin clearfix{
+    zoom:1;
+    &:before,
+    &:after{
+        content: ".";
+        display: block;
+        height: 0;
+        visibility: hidden;
+    }
+    &:after{
+        clear:both;
+    }
+}
+%clearfix{
+    @include clearfix;
+}
+// 清除浮动 end
+// 定位 start
+@mixin posr($vals:auto){
+    position:relative;
+    @if $vals != auto{
+        $dirs:top right bottom left;
+        @for $n from 1 through 4{
+            @if nth($vals,$n) != n{
+                #{nth($dirs,$n)}:nth($vals,$n);
+            }
+        }
+    }
+}
+@mixin posa($vals:auto){
+    position:absolute;
+    @if $vals != auto{
+        $dirs:top right bottom left;
+        @for $n from 1 through 4{
+            @if nth($vals,$n) != n{
+                #{nth($dirs,$n)}:nth($vals,$n);
+            }
+        }
+    }
+}
+@mixin posf($vals:auto){
+    position:fixed;
+    @if $vals != auto{
+        $dirs:top right bottom left;
+        @for $n from 1 through 4{
+            @if nth($vals,$n) != n{
+                #{nth($dirs,$n)}:nth($vals,$n);
+            }
+        }
+    }
+}
+// 定位 end
+// 居中 start
+@mixin center{
+    margin-left: auto;
+    margin-right: auto;
+}
+@mixin flexcenter{
+    margin: auto;
+}
+%center{
+    @include center;
+}
+// 居中 end
+// 上下标 start
+@mixin sup($fz:60%){
+    vertical-align: super;
+    font-size: $fz;
+}
+@mixin sub($fz:60%){
+    vertical-align: sub;
+    font-size: $fz;
+}
+// 上下标 end
+
+/* start 通用的边框 上左白色 下右棕色  */
+@mixin borderA{
+	border-style: solid;
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.2) rgba(105, 63, 36, 0.4) rgba(105, 63, 36, 0.4) rgba(255, 255, 255, 0.2);
+}
+
+/* end 通用的边框 上左白色 下右棕色 */
+/* start 通用的边框 上白色 下棕色 左右没有 */
+@mixin borderTB{
+    border-style: solid none;
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.2) transparent rgba(105, 63, 36, 0.4) transparent;
+}
+@mixin borderTBL{
+	border-style: solid none solid solid;
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.2) transparent rgba(105, 63, 36, 0.4) rgba(255, 255, 255, 0.2);
+}
+
+@mixin borderT{
+	border-style: solid none none;
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.2) transparent transparent transparent;
+}
+
+/* end 通用的边框 上白色 下棕色 左右没有 */
+/* 通用的边框 左白色 右棕色 上下没有 */
+@mixin borderRL{
+	border-style: none solid;
+    border-width: 1px;
+    border-color: transparent rgba(105, 63, 36, 0.4) transparent rgba(255, 255, 255, 0.2);
+}
+@mixin borderR{
+	border-right: 1px solid rgba(105, 63, 36, 0.4);
+}
+@mixin borderL{
+	border-left: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+@mixin borderBL{
+	border-style: none none solid solid;
+    border-width: 1px;
+    border-color: transparent transparent rgba(105, 63, 36, 0.4) rgba(255, 255, 255, 0.2);
+}
+
+/* end 通用的边框 左白色 右棕色 上下没有 */
+@mixin borderB{
+	border-bottom:1px solid rgba(105, 63, 36, 0.4);
+}
+@mixin borderTRB{
+	border-style: solid solid solid none;
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.2) rgba(105, 63, 36, 0.4) rgba(105, 63, 36, 0.4) transparent;
+}
+@mixin borderRB{
+	border-style: none solid solid none;
+    border-width: 1px;
+    border-color: transparent rgba(105, 63, 36, 0.4) rgba(105, 63, 36, 0.4) transparent;
+}
+
+
+/* 按钮 hover 颜色 桔色*/
+$colorju:#f60;
+
